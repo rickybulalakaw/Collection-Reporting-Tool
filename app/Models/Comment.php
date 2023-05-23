@@ -11,6 +11,7 @@ class Comment extends Model
 
     public $filleable = [
         'body',
+        'body',
         'user_id',
         'accountable_form_id'
     ];

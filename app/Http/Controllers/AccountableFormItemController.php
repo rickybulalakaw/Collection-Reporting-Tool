@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AccountableForm;
+use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\AccountableForm;
+use Illuminate\Support\Facades\DB;
+use App\Models\AccountableFormItem;
+use App\Models\RevenueType;
 
 class AccountableFormItemController extends Controller
 {
@@ -15,8 +19,45 @@ class AccountableFormItemController extends Controller
         
     }
 
+    private function userContext(){
+        $accountable_form_types_of_user = DB::table('accountable_form_types')
+        ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
+        ->join('users', 'accountable_forms.user_id', '=', 'users.id')
+        // ->select('accountable_form_types.name')->distinct()
+        ->select('accountable_form_types.id', 'accountable_form_types.name')->distinct()
+        ->where('users.id', auth()->user()->id)
+        ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
+        ->get();
+
+        $collectors = User::get();
+
+        $context = [
+            'accountableFormTypesOfUser' => $accountable_form_types_of_user,
+            'collectors' => $collectors
+        ];
+        return $context;
+    }
+
+    
+
     public function index(AccountableForm $accountableForm) 
     {
+        $context = $this->userContext();
+        
+
+        // get revenue types 
+        $revenue_types = RevenueType::get();
+        $accountable_form_items = AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
+
+
+        
+        $context['accountableForm'] = $accountableForm;
+        $context['revenue_types'] = $revenue_types;
+        $context['accountableFormItemsOfForm'] = $accountable_form_items;
+        $context['method'] = 'add-accountable-form-item';
+
+        return view('accountableForm.show', $context);
+
 
     }
 

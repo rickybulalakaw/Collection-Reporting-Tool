@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountableFormItem;
+use App\Models\AccountableFormType;
 
 class CommunityTaxController extends Controller
 {
@@ -46,6 +47,15 @@ class CommunityTaxController extends Controller
     public function createIndividual (AccountableForm $accountableForm) 
     {
         // dd ($accountableForm);
+
+        $allowed_types = [
+            AccountableFormType::CTC_CORPORATION,
+            AccountableFormType::CTC_INDIVIDUAL
+        ];
+        
+        if(!in_array($accountableForm->accountable_form_type_id, $allowed_types)){
+            return redirect()->route('home')->with('error', 'Invalid parameter submitted');
+        }
 
         $ctc_a = RevenueType::CTC_A;
         $ctc_b = RevenueType::CTC_B;

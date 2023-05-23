@@ -205,12 +205,13 @@ class AccountableFormController extends Controller
         if(($request->accountable_form_type_id == AccountableFormType::CTC_INDIVIDUAL) || ($request->accountable_form_type_id == AccountableFormType::CTC_CORPORATION)){
             return redirect()->route('record-community-tax-individual', $request->accountable_form_id );
 
-        } elseif(isset($request->isThisRpt) && $request->isThisRpt == "Yes") {
+        } elseif($request->accountable_form_type_id == AccountableFormType::RPT_RECEIPT) {
 
             // redirect to fill out form for RPT related fees
 
         } else {
             // redirect to generic form to enter type of data one by one 
+            return redirect()->route('add-accountable-form-item', $request->accountable_form_id);
 
         }
 
@@ -231,10 +232,23 @@ class AccountableFormController extends Controller
 
         $required_status = AccountableForm::IS_USED;
 
+        
+
+
+
         if($accountableForm->use_status !== $required_status){
             return redirect()->route('home')->with('error', 'This Accountable Form is not used') ;
         }
 
+        $disallowed_types = [
+            AccountableFormType::CTC_CORPORATION,
+            AccountableFormType::CTC_INDIVIDUAL,
+            AccountableFormType::RPT_RECEIPT
+        ];
+        
+        if(in_array($accountableForm->accountable_form_type_id, $disallowed_types)){
+            return redirect()->route('home')->with('error', 'Invalid parameter entered');
+        }
 
         $accountableFormItems = AccountableFormItem::with(['revenue_type'])->where('accountable_form_id', $accountableForm->id)->get();
         // AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
@@ -242,6 +256,7 @@ class AccountableFormController extends Controller
         $context = $this->userContext();
         $context['accountableFormItemsOfForm'] = $accountableFormItems;
         $context['accountableForm'] = $accountableForm;
+        $context['method'] = 'show';
 
         // dd($accountableFormItems);
         // dd($data);

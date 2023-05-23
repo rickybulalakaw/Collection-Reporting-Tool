@@ -43,16 +43,7 @@
   @enderror
  </div>
 
- @if($isOfficialReceipt) 
- <div class="form-group">
-    <label for="isThisRpt">Is this Payment for RPT?</label>
-    <select name="isThisRpt" id="isThisRpt" class="form-control">
-        <option value="No">No</option>
-        <!-- <option value="">Select One</option> -->
-        <option value="Yes">Yes</option>
-    </select>
- </div>
- @endif
+
 
 
 

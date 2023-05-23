@@ -47,8 +47,8 @@ Route::controller(AccountableFormController::class)->group(function () {
 
 
 Route::controller(AccountableFormItemController::class)->group(function () {
-    Route::get('/accountableForm/{accountableForm}', 'index')->name('add-accountable-form-item');
-    Route::post('/accountableForm/{accountableForm}', 'store');
+    Route::get('/addAccountableFormItem/{accountableForm}', 'index')->name('add-accountable-form-item');
+    Route::post('/addAccountableFormItem/{accountableForm}', 'store');
 });
 
 Route::controller(AccountableFormTypeController::class)->group(function () {
