@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+  <!-- Alpine JS  -->
+  <script src="//unpkg.com/alpinejs" defer></script>
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css') }}">
   <!-- iCheck -->
@@ -27,6 +30,7 @@
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/daterangepicker/daterangepicker.css') }}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.css') }}">
+
 </head>
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
@@ -211,20 +215,7 @@
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Register AF Type</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Register to Collector</p>
-                </a>
-              </li>
-            </ul>
+            
           </li>
 
           <!-- End of Functions for Accountable Forms Custodian  -->
@@ -321,12 +312,12 @@
           <!-- End of Functions for Accountable Form Types   -->
 
 
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="pages/UI/general.html" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Review Submitted RCD 1 </p>
             </a>
-          </li>
+          </li> -->
           <!-- Link to list of collectors  -->
           <li class="nav-item">
             <a href=" {{ route('supervised-collectors') }}" class="nav-link">
@@ -337,20 +328,20 @@
               </p>
             </a>
             
-            @if($collectors) 
+            <!-- if($collectors)  -->
             <ul class="nav nav-treeview">
-              @foreach($collectors as $collector)
+              <!-- foreach(collectors as collector) -->
               <li class="nav-item">
                 <a href="pages/UI/general.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>{{ $collector->name }} {{ $collector->last_name }} </p>
+                  <!-- This is a list of options of collector of signed in consolidator -->
                 </a>
               </li>
-              @endforeach
+              <!-- endforeach -->
              
               
             </ul>
-            @endif
+            <!-- endif -->
           </li>
           <!-- End of Functions for Accountable Form Types   -->
 
@@ -382,7 +373,7 @@
               <li class="nav-item">
                 <a href="pages/forms/editors.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Editors</p>
+                  <p>Reports <!-- <i class="nav-icon fas fa-tachometer-alt"></i> --> </p>
                 </a>
               </li>
               <li class="nav-item">
@@ -400,7 +391,7 @@
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-table"></i>
               <p>
-                Tables
+                Admin Functions
                 <i class="fas fa-angle-left right"></i>
               </p>
             </a>
@@ -408,19 +399,19 @@
               <li class="nav-item">
                 <a href="pages/tables/simple.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Simple Tables</p>
+                  <p>Positions</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/tables/data.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>DataTables</p>
+                  <p>Offices</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="pages/tables/jsgrid.html" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>jsGrid</p>
+                  <p>Assignments</p>
                 </a>
               </li>
             </ul>

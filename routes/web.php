@@ -8,6 +8,7 @@ use App\Http\Controllers\AccountableFormController;
 use App\Http\Controllers\AccountableFormItemController;
 use App\Http\Controllers\AccountableFormTypeController;
 use App\Http\Controllers\CollectorController;
+use App\Http\Controllers\RealPropertyController;
 
 /*
 index - show all 
@@ -32,9 +33,14 @@ Route::controller(CommunityTaxController::class)->group(function () {
     Route::get('/register-community-tax-corporate/{accountableForm}', 'createCorporate')->name('record-community-tax-corporate');
     Route::POST('/register-community-tax-corporate', 'storeCorporate');
 });
+Route::controller(RealPropertyController::class)->group(function () {
+    Route::get('/register-real-property-tax-receipt/{accountableForm}', 'create')->name('record-real-property-tax-receipt');
+    Route::POST('/register-real-property-tax-receipt', 'store');
+});
 
 Route::controller(AccountableFormController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::get('/review-accountable-form/{accountableForm}', 'review')->name('review-accountable-form');
     Route::get('/show-accountable-form/{accountableForm}', 'show')->name('show-accountable-form');
     Route::get('/register-accountable-form', 'create')->name('create-accountable-form');
     Route::post('/register-accountable-form', 'store');

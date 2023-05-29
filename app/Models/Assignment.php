@@ -9,6 +9,12 @@ class Assignment extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'user_id',
+        'position_id',
+        'office_id'
+    ];
+
     public function user () 
     {
         return $this->belongsTo(User::class);

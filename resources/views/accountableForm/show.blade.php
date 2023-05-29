@@ -11,7 +11,7 @@
  @if( $method)
   @if($method == 'add-accountable-form-item')
   <div class="inline">
-   <form action="" method="post">
+   <form action="{{ route('add-accountable-form-item', $accountableForm->id) }}" method="post"> 
     @csrf
 
     <div class="row">
@@ -59,20 +59,32 @@
   <thead>
    <tr>
     <!-- <th>Counter</th> -->
-    <th class="text-center">Revenue Type</th>
-    <th class="text-center">Amount</th>
+    <th class="text-center" style="width:10%">Actions</th>
+    <th class="text-center"  style="width:60%">Revenue Type</th>
+    <th class="text-center"  style="width:30%">Amount</th>
    </tr>
   </thead>
   <tbody>
    @foreach($accountableFormItemsOfForm as $afi) 
    <tr>
     <!-- <td></td> -->
+    <td class="text-center">
+      
+      
+      <a href=""  class="btn btn-primary "><i class="fa fa-edit" aria-hidden="true"></i> </a> 
+      
+      <form action="" method="post" class="form-inline">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="btn btn-danger "><i class="fa fa-trash" aria-hidden="true"></i> </button>
+      </form>
+    </td>
     <td>{{ $afi->revenue_type->single_display }}</td>
     <td class="text-right">{{ $afi->amount }}</td>
    </tr>
    @endforeach
    <tr>
-    <td class="text-bold">Total</td>
+    <td class="text-bold" colspan="2">Total</td>
     <td class="text-bold text-right">{{ $afi->sum('amount') }} </td>
    </tr>
 

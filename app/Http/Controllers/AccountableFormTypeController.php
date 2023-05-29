@@ -26,11 +26,11 @@ class AccountableFormTypeController extends Controller
         ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
         ->get();
 
-        $collectors = User::get();
+        // $collectors = User::get();
 
         $context = [
             'accountableFormTypesOfUser' => $accountable_form_types_of_user,
-            'collectors' => $collectors
+            // 'collectors' => $collectors
         ];
         return $context;
     }

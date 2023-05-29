@@ -1,4 +1,4 @@
-<div class="col-lg-4 offset-lg-4"> 
+<div x-data="{show:true}" x-init="setTimeout(()=>show=false,3000)" x-show="show" class="col-lg-4 offset-lg-4"> 
 @if (session()->has('success'))
 <p class="alert alert-success text-center">
  {{ session()->get('success') }}

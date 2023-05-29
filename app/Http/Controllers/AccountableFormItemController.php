@@ -29,27 +29,22 @@ class AccountableFormItemController extends Controller
         ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
         ->get();
 
-        $collectors = User::get();
+        // $collectors = User::get();
 
         $context = [
             'accountableFormTypesOfUser' => $accountable_form_types_of_user,
-            'collectors' => $collectors
+            // 'collectors' => $collectors
         ];
         return $context;
     }
-
-    
 
     public function index(AccountableForm $accountableForm) 
     {
         $context = $this->userContext();
         
-
         // get revenue types 
         $revenue_types = RevenueType::get();
         $accountable_form_items = AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
-
-
         
         $context['accountableForm'] = $accountableForm;
         $context['revenue_types'] = $revenue_types;
@@ -58,11 +53,25 @@ class AccountableFormItemController extends Controller
 
         return view('accountableForm.show', $context);
 
-
     }
 
     public function store ( AccountableForm $accountableForm, Request $request) 
     {
+        // This function validates the input, then saves the data, then returns to accountable form function to enter additional items 
+        $input = $this->validate($request, [
+            // 'accountable_form_id' => 'required',
+            'revenue_type_id' => 'required',
+            'amount' => 'required'
+        ]);
+
+        AccountableFormItem::create( [
+            'accountable_form_id' => $accountableForm->id,
+            'revenue_type_id' => $input['revenue_type_id'],
+            'amount' => $input['amount']
+        ]);
+
+        // redirect to accountable form 
+        return redirect()->route('add-accountable-form-item', $accountableForm->id);
 
     }
 }

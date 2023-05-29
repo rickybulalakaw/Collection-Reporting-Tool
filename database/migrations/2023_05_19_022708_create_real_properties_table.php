@@ -18,7 +18,7 @@ return new class extends Migration
             $table->integer('classification');
             $table->string('tax_declaration_no');
             $table->string('barangay');
-            $table->foreignId('accountable_form_id')->constrained(); 
+            $table->foreignId('accountable_form_id')->constrained()->unique(); 
             $table->timestamps();
         });
     }

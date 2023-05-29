@@ -24,9 +24,9 @@
 </div>
 
  <div class="form-group">
-  <label for="date">Date (Editable)</label>
-  <input type="date" name="date" value="{{ $date_today }}" class="form-control" id="date" placeholder="Date">
-  @error('date')
+  <label for="form_date">Date (Editable)</label>
+  <input type="form_date" name="form_date" value="{{ $date_today }}" class="form-control" id="form_date" placeholder="Date">
+  @error('form_date')
    <div class="text-danger mt-2 text-sm">
        {{ $message }}
    </div>

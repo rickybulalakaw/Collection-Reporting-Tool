@@ -15,8 +15,8 @@ class AccountableForm extends Model
         'accountable_form_type_id',
         'accountable_form_number',
         'user_id',
-        'date',
-        // 'form_date',
+        // 'date',
+        'form_date',
         'payor',
         
         'use_status',

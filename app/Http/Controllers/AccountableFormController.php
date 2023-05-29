@@ -28,11 +28,11 @@ class AccountableFormController extends Controller
         ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
         ->get();
 
-        $collectors = User::get();
+        // $collectors = User::get();
 
         $context = [
             'accountableFormTypesOfUser' => $accountable_form_types_of_user,
-            'collectors' => $collectors
+            // 'collectors' => $collectors
         ];
         return $context;
     }
@@ -164,7 +164,7 @@ class AccountableFormController extends Controller
         // dd($request);
         if($request->is_cancelled){
             $this->validate($request, [
-                'date' => 'required'
+                'form_date' => 'required'
 
             ]);
 
@@ -175,12 +175,12 @@ class AccountableFormController extends Controller
             {
 
                 $this->validate($request, [
-                    'date' => 'required'
+                    'form_date' => 'required'
                 ]);
             } else {
 
                 $this->validate($request, [
-                    'date' => 'required',
+                    'form_date' => 'required',
                     'payor' => 'required',
                 ]);
             }
@@ -190,7 +190,7 @@ class AccountableFormController extends Controller
 
         // DB::table('bills')->where('id', $bill->id)->update($updatedBill);
         DB::table('accountable_forms')->where('id', $request->accountable_form_id)->update([
-            'date' => $request->date,
+            'form_date' => $request->form_date,
             'payor' => $request->payor,
             'use_status' => $used_status,
             'accounting_status' => AccountableForm::IS_SUBMITTED
@@ -208,6 +208,8 @@ class AccountableFormController extends Controller
         } elseif($request->accountable_form_type_id == AccountableFormType::RPT_RECEIPT) {
 
             // redirect to fill out form for RPT related fees
+
+            return redirect()->route('record-real-property-tax-receipt', $request->accountable_form_id ); 
 
         } else {
             // redirect to generic form to enter type of data one by one 
@@ -232,9 +234,44 @@ class AccountableFormController extends Controller
 
         $required_status = AccountableForm::IS_USED;
 
+        if($accountableForm->use_status !== $required_status){
+            return redirect()->route('home')->with('error', 'This Accountable Form is not used') ;
+        }
+
+        $disallowed_types = [
+            AccountableFormType::CTC_CORPORATION,
+            AccountableFormType::CTC_INDIVIDUAL,
+            AccountableFormType::RPT_RECEIPT
+        ];
         
+        if(in_array($accountableForm->accountable_form_type_id, $disallowed_types)){
+            return redirect()->route('home')->with('error', 'Invalid parameter entered');
+        }
+
+        $accountableFormItems = AccountableFormItem::with(['revenue_type'])->where('accountable_form_id', $accountableForm->id)->get();
+        // AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
+
+        $context = $this->userContext();
+        $context['accountableFormItemsOfForm'] = $accountableFormItems;
+        $context['accountableForm'] = $accountableForm;
+        $context['method'] = 'show';
+
+        // dd($accountableFormItems);
+        // dd($data);
+        // show details  of accountable form
+
+        return view('accountableForm.show', $context);
 
 
+        // get accountable form items linked to accountable form id
+
+    }
+
+    public function review (AccountableForm $accountableForm){
+        // This function will show the details of an accountable form that has been filled out 
+        // this allows comment by consolidator / approver
+
+        $required_status = AccountableForm::IS_USED;
 
         if($accountableForm->use_status !== $required_status){
             return redirect()->route('home')->with('error', 'This Accountable Form is not used') ;
