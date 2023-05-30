@@ -74,4 +74,14 @@ class AccountableFormItemController extends Controller
         return redirect()->route('add-accountable-form-item', $accountableForm->id);
 
     }
+
+    public function destroy (AccountableFormItem $accountableFormItem, Request $request)
+    {
+
+        $accountableFormItem->delete();
+
+        return redirect()->route('add-accountable-form-item', $request->accountable_form_id)->with('success', 'Accountable Form Item Deleted');
+
+
+    }
 }

@@ -33,6 +33,7 @@ Route::controller(CommunityTaxController::class)->group(function () {
     Route::get('/register-community-tax-corporate/{accountableForm}', 'createCorporate')->name('record-community-tax-corporate');
     Route::POST('/register-community-tax-corporate', 'storeCorporate');
 });
+
 Route::controller(RealPropertyController::class)->group(function () {
     Route::get('/register-real-property-tax-receipt/{accountableForm}', 'create')->name('record-real-property-tax-receipt');
     Route::POST('/register-real-property-tax-receipt', 'store');
@@ -53,8 +54,9 @@ Route::controller(AccountableFormController::class)->group(function () {
 
 
 Route::controller(AccountableFormItemController::class)->group(function () {
-    Route::get('/addAccountableFormItem/{accountableForm}', 'index')->name('add-accountable-form-item');
-    Route::post('/addAccountableFormItem/{accountableForm}', 'store');
+    Route::get('/accountableFormItem/{accountableForm}', 'index')->name('add-accountable-form-item');
+    Route::post('/accountableFormItem/{accountableForm}', 'store');
+    Route::delete('/accountableFormItem/{accountableFormItem}', 'destroy')->name('delete-accountable-form-item');
 });
 
 Route::controller(AccountableFormTypeController::class)->group(function () {

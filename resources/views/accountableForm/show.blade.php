@@ -4,6 +4,15 @@
 <div class="container">
  <h1 class="text-center">Accountable Form</h1>
 
+ @if($method == 'review-accountable-form')
+  <div>
+    <p class="alert alert-info">
+      Recommended process for reviewers: Count the money first and check that the total in the individual RCD is the same as the total in the RCD. If the money is correct, then proceed with reviewing individual accountable forms.
+
+    </p>
+  </div>
+  @endif
+
  <p>Payor: {{ $accountableForm->payor }}</p>
  <p>Form Serial No. {{ $accountableForm->accountable_form_number }}</p>
  <p>Date Used: {{ $accountableForm->date }}</p>
@@ -17,7 +26,7 @@
     <div class="row">
      <div class="col-lg">
       <div class="form-group ">
-       <select name="revenue_type_id" id="revenue_type_id" class="form-control">
+       <select name="revenue_type_id" id="revenue_type_id" class="form-control" autofocus>
         <option value="">Select Revenue Type</option>
         @foreach($revenue_types as $revenuetype) 
         <option value="{{ $revenuetype->id }}">{{ $revenuetype->single_display }}</option>
@@ -51,6 +60,7 @@
    </form>
 
   </div>
+  
   @endif 
  @endif
 
@@ -59,33 +69,36 @@
   <thead>
    <tr>
     <!-- <th>Counter</th> -->
-    <th class="text-center" style="width:10%">Actions</th>
     <th class="text-center"  style="width:60%">Revenue Type</th>
     <th class="text-center"  style="width:30%">Amount</th>
+    <th class="text-center" style="width:10%">Actions</th>
    </tr>
   </thead>
   <tbody>
    @foreach($accountableFormItemsOfForm as $afi) 
    <tr>
     <!-- <td></td> -->
-    <td class="text-center">
+    
+    <td>{{ $afi->revenue_type->single_display }}</td>
+    <td class="text-right">{{ number_format($afi->amount, 2) }}</td>
+    <td class="text-center form-inline">
       
       
-      <a href=""  class="btn btn-primary "><i class="fa fa-edit" aria-hidden="true"></i> </a> 
+      <a href=""  class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> </a> &nbsp;
       
-      <form action="" method="post" class="form-inline">
+      <form action="{{ route('delete-accountable-form-item', $afi->id) }} " method="post" class="form-inline">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger "><i class="fa fa-trash" aria-hidden="true"></i> </button>
+        <input type="hidden" name="accountable_form_id" value="{{ $afi->accountable_form_id }} ">
+        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> </button>
       </form>
     </td>
-    <td>{{ $afi->revenue_type->single_display }}</td>
-    <td class="text-right">{{ $afi->amount }}</td>
    </tr>
    @endforeach
-   <tr>
-    <td class="text-bold" colspan="2">Total</td>
-    <td class="text-bold text-right">{{ $afi->sum('amount') }} </td>
+   <tr class="bg-secondary">
+    <td class="text-bold">Total</td>
+    <td class="text-bold text-right">{{ number_format($afi->sum('amount'),2) }} </td>
+    <td > </td>
    </tr>
 
 
