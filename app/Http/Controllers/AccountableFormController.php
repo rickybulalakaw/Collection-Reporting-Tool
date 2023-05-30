@@ -293,7 +293,7 @@ class AccountableFormController extends Controller
         $context = $this->userContext();
         $context['accountableFormItemsOfForm'] = $accountableFormItems;
         $context['accountableForm'] = $accountableForm;
-        $context['method'] = 'show';
+        $context['method'] = 'review-accountable-form';
 
         // dd($accountableFormItems);
         // dd($data);
