@@ -13,7 +13,9 @@ This application aims to assist collection officers submit report of collections
 
 The application uses Laravel Framework with Jetstream (Livewire) and Sail. 
 
-## Status 
+## Project Details
+
+### Status
 
 The application is currently on development stage. Among others, the interface uses Boostrap. This shall be updated to TailwindCSS upon completion of functions. 
 
