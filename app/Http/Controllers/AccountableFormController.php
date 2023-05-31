@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
@@ -291,16 +292,18 @@ class AccountableFormController extends Controller
         }
 
         $accountableFormItems = AccountableFormItem::with(['revenue_type'])->where('accountable_form_id', $accountableForm->id)->get();
-        // AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
+        
+        $accountableFormType = AccountableFormType::where('id', $accountableForm->accountable_form_type_id)->first();
+
+        $formComments = Comment::with(['user'])->where('accountable_form_id', $accountableForm->id)->orderBy('created_at', 'desc')->get();
+        
 
         $context = $this->userContext();
         $context['accountableFormItemsOfForm'] = $accountableFormItems;
         $context['accountableForm'] = $accountableForm;
         $context['method'] = 'review-accountable-form';
-
-        // dd($accountableFormItems);
-        // dd($data);
-        // show details  of accountable form
+        $context['accountable_form_type'] = $accountableFormType;
+        $context['comments'] = $formComments;
 
         return view('accountableForm.show', $context);
 

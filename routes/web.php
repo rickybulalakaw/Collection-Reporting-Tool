@@ -3,12 +3,13 @@
 use App\Models\AccountableForm;
 use App\Models\AccountableFormType;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CollectorController;
 use App\Http\Controllers\CommunityTaxController;
+use App\Http\Controllers\RealPropertyController;
 use App\Http\Controllers\AccountableFormController;
 use App\Http\Controllers\AccountableFormItemController;
 use App\Http\Controllers\AccountableFormTypeController;
-use App\Http\Controllers\CollectorController;
-use App\Http\Controllers\RealPropertyController;
 
 /*
 index - show all 
@@ -20,13 +21,15 @@ update - save new data of edited
 destroy - delete one 
 */
 
+Route::controller(CommentController::class)->group(function () {
+    Route::post('/comment/{accountableForm}', 'store')->name('submit-comment');
+});
+
 Route::controller(CollectorController::class)->group(function () {
     Route::get('/collectors', 'index')->name('collectors-home');
     Route::get('/supervised-collectors', 'supervised')->name('supervised-collectors');
-    // Route::POST('/register-community-tax-individual/{accountableForm}', 'storeIndividual');
-    // Route::get('/register-community-tax-corporate/{accountableForm}', 'createCorporate')->name('create-community-tax-corporate');
-    // Route::POST('/register-community-tax-corporate', 'storeCorporate');
 });
+
 Route::controller(CommunityTaxController::class)->group(function () {
     Route::get('/register-community-tax-individual/{accountableForm}', 'createIndividual')->name('record-community-tax-individual');
     Route::POST('/register-community-tax-individual/{accountableForm}', 'storeIndividual');

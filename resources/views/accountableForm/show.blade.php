@@ -127,6 +127,68 @@
 
  @endif
 
+ @if($method == 'review-accountable-form')
+ <div class="bg-light bordered rounded">
+  <form action="{{ route('submit-comment', $accountableForm->id) }}" method="post">
+    @csrf
+    <textarea name="comment" id="summernote" cols="30" rows="10"></textarea>
+    <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-comments" aria-hidden="true"></i> Submit comment</button>
+  </form>
+ </div>
+
+ 
+
+
+ <!-- Summernote -->
+<script src="{{ asset('adminlte/plugins/summernote/summernote-bs4.min.js') }}"></script>
+
+
+ <script>
+    $(document).ready(function() {
+      // Summernote
+      $('#summernote').summernote({
+          height: 100,
+          focus: true,
+          toolbar: [
+              ['style', ['style']],
+              ['font', ['bold', 'italic', 'underline', 'superscript', 'subscript', 'strikethrough', 'clear', ]],
+              ['fontname', ['fontname']],
+              ['color', ['color']],
+              ['para', ['ul', 'ol', 'paragraph', 'height']],
+              ['table', ['table']],
+              ['insert',
+                  [
+                      // 'picture', 
+                      // 'video'
+                      'link'
+                  ]
+              ],
+              ['view',
+                  [
+                      'fullscreen',
+                      // 'codeview',
+                      'help'
+                  ]
+              ],
+          ],
+          lineHeights: ['0.2', '0.3', '0.4', '0.5', '0.6', '0.8', '1.0', '1.2', '1.4', '1.5', '2.0', '3.0'],
+          codeviewIframeFilter: true
+      });
+    });
+</script>
+
+ @endif
+
+ @if (isset($comments) && $comments->count() > 0)
+   @foreach ($comments as $comment)
+   <div class="bg-dark mt-3 p-2 rounded">
+    {!! $comment->body !!}
+    <small>Comment by {{ $comment->user->name . " " . $comment->user->last_name }} {{ $comment->created_at->diffForHumans() }}. </small>
+   </div>
+   @endforeach
+ 
+ @endif
+
 
 </div>
 

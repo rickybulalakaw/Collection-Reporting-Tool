@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
 use App\Models\Assignment;
 use App\Models\AccountableForm;
 use Laravel\Sanctum\HasApiTokens;
@@ -77,5 +78,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function accountable_form_items () 
     {
         return $this->hasManyThrough(AccountableFormItem::class, AccountableForm::class);
+    }
+
+    public function comments () 
+    {
+        return $this->hasMany(Comment::class);
     }
 }
