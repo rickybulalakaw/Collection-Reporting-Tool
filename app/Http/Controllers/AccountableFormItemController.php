@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\RevenueType;
 use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountableFormItem;
-use App\Models\RevenueType;
+use App\Models\AccountableFormType;
 
 class AccountableFormItemController extends Controller
 {
@@ -45,11 +46,13 @@ class AccountableFormItemController extends Controller
         // get revenue types 
         $revenue_types = RevenueType::get();
         $accountable_form_items = AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
+        $accountableFormType = AccountableFormType::where('id', $accountableForm->accountable_form_type_id)->first();
         
         $context['accountableForm'] = $accountableForm;
         $context['revenue_types'] = $revenue_types;
         $context['accountableFormItemsOfForm'] = $accountable_form_items;
         $context['method'] = 'add-accountable-form-item';
+        $context['accountable_form_type'] = $accountableFormType;
 
         return view('accountableForm.show', $context);
 

@@ -240,7 +240,7 @@ class AccountableFormController extends Controller
 
         $disallowed_types = [
             AccountableFormType::CTC_CORPORATION,
-            AccountableFormType::CTC_INDIVIDUAL,
+            // AccountableFormType::CTC_INDIVIDUAL,
             AccountableFormType::RPT_RECEIPT
         ];
         
@@ -251,9 +251,12 @@ class AccountableFormController extends Controller
         $accountableFormItems = AccountableFormItem::with(['revenue_type'])->where('accountable_form_id', $accountableForm->id)->get();
         // AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
 
+        $accountableFormType = AccountableFormType::where('id', $accountableForm->accountable_form_type_id)->first();
+        
         $context = $this->userContext();
         $context['accountableFormItemsOfForm'] = $accountableFormItems;
         $context['accountableForm'] = $accountableForm;
+        $context['accountable_form_type'] = $accountableFormType;
         $context['method'] = 'show';
 
         // dd($accountableFormItems);

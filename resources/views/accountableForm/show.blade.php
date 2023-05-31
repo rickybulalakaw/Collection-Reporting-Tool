@@ -13,9 +13,26 @@
   </div>
   @endif
 
- <p>Payor: {{ $accountableForm->payor }}</p>
- <p>Form Serial No. {{ $accountableForm->accountable_form_number }}</p>
- <p>Date Used: {{ $accountableForm->date }}</p>
+  <table class="table table-light table-hover table-striped">
+    <tr>
+      <td class="text-bold">Payor</td>
+      <td>{{ $accountableForm->payor }}</td>
+    </tr>
+    <tr>
+      <td class="text-bold">Form Serial No.</td>
+      <td>{{ $accountableForm->accountable_form_number }}</td>
+    </tr>
+    <tr>
+      <td class="text-bold">Date Used</td>
+      <td>{{ $accountableForm->form_date }}</td>
+    </tr>
+    <tr>
+      <td class="text-bold">Form Type</td>
+      <td>{{ $accountable_form_type->name }}</td>
+    </tr>
+    
+  </table>
+
 
  @if( $method)
   @if($method == 'add-accountable-form-item')
