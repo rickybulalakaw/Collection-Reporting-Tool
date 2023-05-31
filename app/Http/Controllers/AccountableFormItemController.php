@@ -9,6 +9,7 @@ use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountableFormItem;
 use App\Models\AccountableFormType;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
 class AccountableFormItemController extends Controller
@@ -63,7 +64,7 @@ class AccountableFormItemController extends Controller
     {
         // function that checks that the current user is authorized to create an accountable form item based on the accountable form id
 
-        $this->authorize('create', AccountableFormItem::class);
+        $this->authorize('create', $accountableForm);
 
         // This function validates the input, then saves the data, then returns to accountable form function to enter additional items 
         $input = $this->validate($request, [
