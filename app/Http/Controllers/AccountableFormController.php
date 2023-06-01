@@ -323,6 +323,18 @@ class AccountableFormController extends Controller
     
     }
 
+    public function userDraft () 
+    {
+        // This function will show list of accountable forms of current user for this date 
+
+        return "My accountable Forms submitted today";
+
+        $context = $this->userContext();
+
+        return view('accountableForm.report', $context);
+
+    }
+
     public function destroy (AccountableForm $accountableForm) 
     {
 

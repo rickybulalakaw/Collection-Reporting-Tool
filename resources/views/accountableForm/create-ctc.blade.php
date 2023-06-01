@@ -64,7 +64,7 @@
 
 
 
-  <button class="btn btn-primary btn-lg">Assign to Collector</button>
+  <button class="btn btn-primary">Submit</button>
  </form>
 </div>
 @endsection
