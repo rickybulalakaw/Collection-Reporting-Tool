@@ -43,6 +43,7 @@ class AccountableFormItemController extends Controller
 
     public function index(AccountableForm $accountableForm) 
     {
+        // dd ($accountableForm);
         $context = $this->userContext();
         
         // get revenue types 
@@ -50,6 +51,9 @@ class AccountableFormItemController extends Controller
         $accountable_form_items = AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
         $accountableFormType = AccountableFormType::where('id', $accountableForm->accountable_form_type_id)->first();
         
+
+        // dd($accountable_form_items);
+
         $context['accountableForm'] = $accountableForm;
         $context['revenue_types'] = $revenue_types;
         $context['accountableFormItemsOfForm'] = $accountable_form_items;
@@ -64,7 +68,7 @@ class AccountableFormItemController extends Controller
     {
         // function that checks that the current user is authorized to create an accountable form item based on the accountable form id
 
-        $this->authorize('create', $accountableForm);
+        // $this->authorize('create', $accountableForm);
 
         // This function validates the input, then saves the data, then returns to accountable form function to enter additional items 
         $input = $this->validate($request, [

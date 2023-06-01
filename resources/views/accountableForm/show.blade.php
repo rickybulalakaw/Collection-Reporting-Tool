@@ -114,17 +114,14 @@
    @endforeach
    <tr class="bg-secondary">
     <td class="text-bold">Total</td>
-    <td class="text-bold text-right">{{ number_format($afi->sum('amount'),2) }} </td>
+    <td class="text-bold text-right">{{ number_format($accountableFormItemsOfForm->sum('amount'),2) }} </td>
     <td > </td>
    </tr>
-
-
   </tbody>
 
  </table>
  @else 
  <p class="text-bold">There is no accountable form item for this number.</p>
-
  @endif
 
  @if($method == 'review-accountable-form')
