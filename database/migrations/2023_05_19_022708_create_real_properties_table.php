@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('period_covered');
             $table->integer('classification');
             $table->string('tax_declaration_no');
-            $table->string('barangay');
+            $table->foreignId('barangay_id')->constrained()->cascadeOnDelete();
             $table->foreignId('accountable_form_id')->constrained()->unique(); 
             $table->timestamps();
         });

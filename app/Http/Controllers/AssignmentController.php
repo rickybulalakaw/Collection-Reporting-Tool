@@ -18,6 +18,7 @@ class AssignmentController extends Controller
 
     public function index () 
     {
+        // this function shows all assignments
         
     }
 

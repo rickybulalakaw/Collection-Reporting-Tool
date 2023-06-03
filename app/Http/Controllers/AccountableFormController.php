@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\RevenueType;
+use App\Models\RealProperty;
 use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountableFormItem;
 use App\Models\AccountableFormType;
+use App\Models\CommunityTax;
 
 class AccountableFormController extends Controller
 {
@@ -154,6 +157,29 @@ class AccountableFormController extends Controller
         $context['accountable_form_number'] = $accountableForm->accountable_form_number;
         $context['date_today'] = $date_today;
 
+
+        $ctc_id = [AccountableFormType::CTC_INDIVIDUAL, AccountableFormType::CTC_CORPORATION];
+        if (in_array($accountableForm->accountable_form_type_id, $ctc_id)) { 
+            $context['is_ctc'] = true;
+
+            $ctc_a = RevenueType::CTC_A;
+            $ctc_b = RevenueType::CTC_B;
+            $ctc_c = RevenueType::CTC_C;
+            $ctc_c1 = RevenueType::CTC_C1;
+
+            $context['ctc_a'] = $ctc_a;
+            $context['ctc_b'] = $ctc_b;
+            $context['ctc_c'] = $ctc_c;
+    
+            $context['ctc_c1'] = $ctc_c1;
+
+        } elseif($accountableForm->accountable_form_type_id == AccountableFormType::RPT_RECEIPT){
+            $context['is_rpt_receipt'] = true;
+        } else {
+            $context['regular_af'] = true;
+        }
+
+        
         return view('accountableForm.record', $context);
 
     }
@@ -174,13 +200,24 @@ class AccountableFormController extends Controller
 
             if (($request->accountable_form_type_id == AccountableFormType::CTC_INDIVIDUAL) || ($request->accountable_form_type_id == AccountableFormType::CTC_CORPORATION))
             {
-
-                $this->validate($request, [
-                    'form_date' => 'required'
+                $input = $this->validate($request, [
+                    'form_date' => 'required',
+                    'payor' => 'required'
                 ]);
+            } elseif($request->accountable_form_type_id == AccountableFormType::RPT_RECEIPT) {
+
+                $input = $this->validate($request, [
+                    'form_date' => 'required',
+                    'payor' => 'required',
+                    'receipt_no_pf_no_25' => 'required',
+                    'period_covered' => 'required',
+                    'classification' => 'required',
+                    'tax_declaration_no' => 'required'
+                ]);
+
             } else {
 
-                $this->validate($request, [
+                $input = $this->validate($request, [
                     'form_date' => 'required',
                     'payor' => 'required',
                 ]);
@@ -201,18 +238,50 @@ class AccountableFormController extends Controller
             return redirect()->route('record-accountable-form', $request->accountable_form_type_id )->with('success', 'Accountable Form is cancelled') ;
         }
 
+        
+
         // add logic depending on account form type or revenue type
 
         if(($request->accountable_form_type_id == AccountableFormType::CTC_INDIVIDUAL) || ($request->accountable_form_type_id == AccountableFormType::CTC_CORPORATION)){
+            
+            
             return redirect()->route('record-community-tax-individual', $request->accountable_form_id );
 
-        } elseif($request->accountable_form_type_id == AccountableFormType::RPT_RECEIPT) {
+            // save data for items
+            AccountableFormItem::create([
+                'accountable_form_id' => $request->accountable_form_id,
+
+            ]);
+            // store the data for rpt table 
+
+           
+
+        } elseif($request->accountable_form_type_id == AccountableFormType::RPT_RECEIPT) { 
+
+            RealProperty::create([
+                'receipt_no_pf_no_25' => $input['receipt_no_pf_no_25'],
+                'period_covered' => $input['period_covered'], 
+                'classification' => $input['classification'],
+                'tax_declaration_no' => $input['tax_declaration_no'],
+                'barangay',
+                'accountable_form_id' => $request->accountable_form_id,
+            ]);
 
             // redirect to fill out form for RPT related fees
 
+            // save data for items 
+
+
+            AccountableFormItem::create([
+                'accountable_form_id' => $request->accountable_form_id,
+
+            ]);
+
             return redirect()->route('record-real-property-tax-receipt', $request->accountable_form_id ); 
 
-        } else {
+
+
+        }else {
             // redirect to generic form to enter type of data one by one 
             return redirect()->route('add-accountable-form-item', $request->accountable_form_id);
 
@@ -284,7 +353,7 @@ class AccountableFormController extends Controller
         $disallowed_types = [
             AccountableFormType::CTC_CORPORATION,
             AccountableFormType::CTC_INDIVIDUAL,
-            AccountableFormType::RPT_RECEIPT
+            // AccountableFormType::RPT_RECEIPT
         ];
         
         if(in_array($accountableForm->accountable_form_type_id, $disallowed_types)){
@@ -297,6 +366,8 @@ class AccountableFormController extends Controller
 
         $formComments = Comment::with(['user'])->where('accountable_form_id', $accountableForm->id)->orderBy('created_at', 'desc')->get();
         
+        
+
 
         $context = $this->userContext();
         $context['accountableFormItemsOfForm'] = $accountableFormItems;
@@ -304,6 +375,7 @@ class AccountableFormController extends Controller
         $context['method'] = 'review-accountable-form';
         $context['accountable_form_type'] = $accountableFormType;
         $context['comments'] = $formComments;
+
 
         return view('accountableForm.show', $context);
 

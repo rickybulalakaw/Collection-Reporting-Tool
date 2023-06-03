@@ -35,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'dob',
         'email',
         'password',
+        'status'
     ];
 
     /**
@@ -67,6 +68,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'profile_photo_url',
     ];
 
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 0;
+    
     public function accountable_forms () {
         return $this->hasMany(AccountableForm::class);
     }
