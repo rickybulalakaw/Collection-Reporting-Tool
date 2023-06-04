@@ -20,6 +20,7 @@ class AccountableFormController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+
     }
 
     private function userContext(){
@@ -80,6 +81,11 @@ class AccountableFormController extends Controller
 
         // return view('accountableForm.create', compact('users', 'accountableFormTypes', 'context'));
         return view('accountableForm.create', $context);
+    }
+
+    public function test() 
+    {
+        return view ('pages.test-page');
     }
 
     public function store (Request $request){
@@ -417,5 +423,9 @@ class AccountableFormController extends Controller
     }
 
 
+    public function dashboard() 
+    {
+        return view('pages.dashboard.dashboard');
+    }
 
 }
