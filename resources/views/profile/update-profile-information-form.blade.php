@@ -54,7 +54,7 @@
 
         <!-- Name -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="name" value="{{ __('Name') }}" />
+            <x-label for="name" value="{{ __('First Name') }}" />
             <x-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="state.name" autocomplete="name" />
             <x-input-error for="name" class="mt-2" />
         </div>
@@ -75,7 +75,7 @@
 
         <!-- Extension -->
         <div class="col-span-6 sm:col-span-4">
-            <x-label for="extension" value="{{ __('Middle Name') }}" />
+            <x-label for="extension" value="{{ __('Extension') }}" />
             <x-input id="extension" type="text" class="mt-1 block w-full" wire:model.defer="state.extension" autocomplete="extension" />
             <x-input-error for="extension" class="mt-2" />
         </div>
@@ -83,7 +83,7 @@
         <!-- DOB-->
         <div class="col-span-6 sm:col-span-4">
             <x-label for="dob" value="{{ __('Date of Birth') }}" />
-            <x-input id="dob" type="text" class="mt-1 block w-full" wire:model.defer="state.dob" autocomplete="dob" />
+            <x-input id="dob" type="date" class="mt-1 block w-full" wire:model.defer="state.dob" autocomplete="dob" />
             <x-input-error for="dob" class="mt-2" />
         </div>
 
