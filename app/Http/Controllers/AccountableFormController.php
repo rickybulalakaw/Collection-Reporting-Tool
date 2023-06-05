@@ -391,6 +391,19 @@ class AccountableFormController extends Controller
     }
 
 
+    public function endorse (AccountableForm $accountableForm, Request $request)
+    {
+        // This function is used by a consolidator 
+        // This function will change the status of an accountable form from IS_USED to IS_REVIEWED_CONSOLIDATOR
+
+        $accountableForm->accounting_status = AccountableForm::IS_REVIEWED_CONSOLIDATOR;
+
+        $accountableForm->save();
+
+        // return to previous page 
+        return redirect()->route('review-accountable-form', $accountableForm->id)->with('success', 'Accountable Form status updated')  ;        
+
+    }
     public function edit (AccountableForm $accountableForm)
     {
 

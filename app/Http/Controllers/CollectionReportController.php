@@ -40,4 +40,18 @@ class CollectionReportController extends Controller
     {
 
     }
+
+    public function individual (User $user) 
+    {
+        // User is a collector 
+
+
+
+    }
+
+    public function consolidated (User $user)
+    {
+        // User is a Supervisor 
+
+    }
 }
