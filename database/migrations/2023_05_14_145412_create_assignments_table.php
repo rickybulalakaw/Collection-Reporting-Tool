@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('office_id')->constrained()->cascadeOnDelete();
             $table->foreignId('position_id')->constrained()->cascadeOnDelete();
             $table->foreignId('supervisor_id')->constrained('users')->nullable();
+            $table->integer('function')->default(1);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

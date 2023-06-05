@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
         Position::factory()->create(['name' => 'Consolidator', 'is_active' => 1]);
         Position::factory()->create(['name' => 'Treasurer', 'is_active' => 1]);
 
-        Assignment::factory()->create(['user_id' => 2, 'office_id' => 1, 'position_id' => 2, 'is_active' => 1, 'supervisor_id' => 1, 'is_active' => 1]);
-        Assignment::factory()->create(['user_id' => 3, 'office_id' => 2, 'position_id' => 1, 'is_active' => 1, 'supervisor_id' => 2, 'is_active' => 1]);
+        Assignment::factory()->create(['user_id' => 2, 'office_id' => 1, 'position_id' => 2, 'is_active' => 1, 'supervisor_id' => 1, 'is_active' => 1, 'function' => Assignment::IS_COLLECTOR]);
+        Assignment::factory()->create(['user_id' => 3, 'office_id' => 2, 'position_id' => 1, 'is_active' => 1, 'supervisor_id' => 2, 'is_active' => 1, 'function' => Assignment::IS_COLLECTOR]);
 
         AccountableFormType::factory()->create(['name' => 'Official Receipt', 'number' => '51', 'default_amount' => null]);
         AccountableFormType::factory()->create(['name' => 'Certificate of Transfer of Large Cattle', 'number' => '52', 'default_amount' => null]);
