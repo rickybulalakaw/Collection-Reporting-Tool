@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Office;
 use App\Models\Position;
-use App\Models\Assignment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class AssignmentController extends Controller
 {
@@ -19,23 +19,30 @@ class AssignmentController extends Controller
     public function index () 
     {
         // this function shows all assignments
+        $users = User::where('id', '!=', auth()->user()->id)
+            ->with('office', 'position')
+            ->get();
         
     }
 
-    public function create () 
-    {
-        $users = User::get();
-        $positions = Position::get(); 
-        $offices = Office::get();
-    }
-
-    public function store (Request $request)
-    {
-        
-    }
-
-    public function delete (Assignment $assignment) 
+    public function edit (User $user)
     {
 
+        // shows update user profile page 
+        if (! Gate::allows('is-admin', $user)) {
+            abort(403);
+        }
+
+        return "allowed";
+
+       
     }
+
+    public function update (User $user, Request $request,)
+    {
+        // updates user assignment details 
+
+    }
+
+
 }

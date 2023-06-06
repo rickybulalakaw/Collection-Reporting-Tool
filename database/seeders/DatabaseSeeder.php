@@ -26,9 +26,6 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Ricky', 'last_name' => 'Bulalakaw', 'email' => 'rbulalakaw@gmail.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE]);
-        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Jose', 'last_name' => 'Rizal', 'email' => 'jose@rizal.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE]);
-        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Andres', 'last_name' => 'Bonifacio', 'email' => 'andres@bonifacio.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE]);
 
         Office::factory()->create(['name' => 'Treasury', 'is_active' => 1]);
         Office::factory()->create(['name' => 'Market', 'is_active' => 1]);
@@ -37,8 +34,11 @@ class DatabaseSeeder extends Seeder
         Position::factory()->create(['name' => 'Consolidator', 'is_active' => 1]);
         Position::factory()->create(['name' => 'Treasurer', 'is_active' => 1]);
 
-        Assignment::factory()->create(['user_id' => 2, 'office_id' => 1, 'position_id' => 2, 'is_active' => 1, 'supervisor_id' => 1, 'is_active' => 1, 'function' => Assignment::IS_COLLECTOR]);
-        Assignment::factory()->create(['user_id' => 3, 'office_id' => 2, 'position_id' => 1, 'is_active' => 1, 'supervisor_id' => 2, 'is_active' => 1, 'function' => Assignment::IS_COLLECTOR]);
+
+        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Ricky', 'last_name' => 'Bulalakaw', 'email' => 'rbulalakaw@gmail.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE, 'function' => User::IS_ADMIN]);
+        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Jose', 'last_name' => 'Rizal', 'email' => 'jose@rizal.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE, 'position_id' => 2, 'office_id' => 1, 'function' => User::IS_CONSOLIDATOR]);
+        User::factory()->create(['dob'=> '2000-01-01', 'name'=> 'Andres', 'last_name' => 'Bonifacio', 'email' => 'andres@bonifacio.com', 'password' => 'password', 'is_active' => User::STATUS_ACTIVE, 'position_id' => 1, 'office_id' => 1, 'supervisor_id' => 2, 'function' => User::IS_COLLECTOR]);
+
 
         AccountableFormType::factory()->create(['name' => 'Official Receipt', 'number' => '51', 'default_amount' => null]);
         AccountableFormType::factory()->create(['name' => 'Certificate of Transfer of Large Cattle', 'number' => '52', 'default_amount' => null]);

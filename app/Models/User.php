@@ -35,7 +35,11 @@ class User extends Authenticatable implements MustVerifyEmail
         'dob',
         'email',
         'password',
-        'status'
+        'position_id',
+        'office_id',
+        'supervisor_id',
+        'function',
+        'is_active'
     ];
 
     /**
@@ -70,14 +74,17 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public const STATUS_ACTIVE = 1;
     public const STATUS_INACTIVE = 0;
+
+    public const IS_COLLECTOR = 1;
+    public const IS_CONSOLIDATOR = 2;
+    public const IS_RECEIVER = 3;
+    public const IS_TREASURER = 4;
+    public const IS_ADMIN = 5;
     
     public function accountable_forms () {
         return $this->hasMany(AccountableForm::class);
     }
 
-    public function assignment () {
-        return $this->hasOne(Assignment::class);
-    }
 
     public function accountable_form_items () 
     {
@@ -87,5 +94,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function comments () 
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function position () 
+    {
+        return $this->hasOne(Position::class);
+    }
+
+    public function office () 
+    {
+        return $this->hasOne(Office::class);
     }
 }

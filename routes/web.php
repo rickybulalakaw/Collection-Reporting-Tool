@@ -5,6 +5,7 @@ use App\Models\AccountableFormType;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\CollectorController;
+use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CommunityTaxController;
 use App\Http\Controllers\RealPropertyController;
 use App\Http\Controllers\AccountableFormController;
@@ -21,6 +22,10 @@ update - save new data of edited
 destroy - delete one 
 */
 
+Route::controller(AssignmentController::class)->group(function () {
+    Route::get('/assignment/{user}', 'edit')->name('edit-assignment');
+    Route::put('/assignment/{user}', 'update');
+});
 Route::controller(CommentController::class)->group(function () {
     Route::post('/comment/{accountableForm}', 'store')->name('submit-comment');
 });
