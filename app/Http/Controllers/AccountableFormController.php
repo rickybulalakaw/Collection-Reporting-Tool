@@ -90,7 +90,7 @@ class AccountableFormController extends Controller
 
         $accountableFormTypes = AccountableFormType::get();
         $context = $this->userContext();
-        $context['users'] = $users;
+        $context['collectors'] = $users;
         $context['accountableFormTypes'] = $accountableFormTypes;
         $context['trigger'] = 'click';
 
@@ -98,24 +98,24 @@ class AccountableFormController extends Controller
         return view('accountableForm.create', $context);
     }
 
-    public function test() 
-    {
-        return view ('pages.test-page');
-    }
-
     public function store (Request $request){
 
         // This function will create records of accountable forms based on input 
         // This function will loop creating records of accountable forms based on start and end numbers
-        
-        // AccountableForm::create([]);
 
+        // dd ($request);
         $this->validate($request, [
             'accountable_form_type_id' => 'required',
-            'user_id' => 'required',
+            // display human readable name if error 
+            'user_id' => ['required'],  
+
             'start_number' => 'required',
             'end_number' => 'required',
         ]);
+
+        if($request->end_number < $request->start_number){
+            return back()->with('error', 'End number cannot be less than start number') ;
+        }
 
         $start_number = $request->start_number;
         $end_number = $request->end_number;

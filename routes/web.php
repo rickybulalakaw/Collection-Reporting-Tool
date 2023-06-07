@@ -50,7 +50,6 @@ Route::controller(RealPropertyController::class)->group(function () {
 Route::controller(AccountableFormController::class)->group(function () {
     Route::get('/', 'index')->name('home');
     Route::get('/dashboard2', 'dashboard');
-    Route::get('/test2', 'test');
     Route::get('/my-draft-report', 'userDraft')->name('view-own-draft-individual-report');
     Route::get('/review-accountable-form/{accountableForm}', 'review')->name('review-accountable-form');
     Route::get('/show-accountable-form/{accountableForm}', 'show')->name('show-accountable-form');
