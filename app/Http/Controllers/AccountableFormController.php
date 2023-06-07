@@ -86,12 +86,13 @@ class AccountableFormController extends Controller
             abort(403);
         }
 
-        $users = User::get();
+        $users = User::where('function', '=', User::IS_COLLECTOR)->get();
 
         $accountableFormTypes = AccountableFormType::get();
         $context = $this->userContext();
         $context['users'] = $users;
         $context['accountableFormTypes'] = $accountableFormTypes;
+        $context['trigger'] = 'click';
 
         // return view('accountableForm.create', compact('users', 'accountableFormTypes', 'context'));
         return view('accountableForm.create', $context);
