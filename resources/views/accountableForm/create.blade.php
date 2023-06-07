@@ -1,6 +1,4 @@
-@extends('layouts.admin')
-
-@section('content')
+<x-app-layout>
 <div class="container">
 @if (Session::has('error') )
  <p class="alert alert-danger">
@@ -65,4 +63,4 @@
   <button class="btn btn-primary btn-lg">Assign to Collector</button>
  </form>
 </div>
-@endsection
+</x-app-layout>

@@ -1,6 +1,5 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
 <div class="container">
  <h1 class="text-center">Record {{ $name }} </h1>
 
@@ -146,4 +145,4 @@
 </form>
 </div>
 
-@endsection
+</x-app-layout>

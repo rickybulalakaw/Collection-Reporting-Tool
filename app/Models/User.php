@@ -77,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public const IS_COLLECTOR = 1;
     public const IS_CONSOLIDATOR = 2;
-    public const IS_RECEIVER = 3;
+    public const IS_CUSTODIAN = 3;
     public const IS_TREASURER = 4;
     public const IS_ADMIN = 5;
     

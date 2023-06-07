@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\RevenueType;
+use App\Models\CommunityTax;
 use App\Models\RealProperty;
 use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use App\Models\AccountableFormItem;
 use App\Models\AccountableFormType;
-use App\Models\CommunityTax;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class AccountableFormController extends Controller
 {
@@ -24,28 +26,37 @@ class AccountableFormController extends Controller
     }
 
     private function userContext(){
-        $accountable_form_types_of_user = DB::table('accountable_form_types')
-        ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
-        ->join('users', 'accountable_forms.user_id', '=', 'users.id')
-        // ->select('accountable_form_types.name')->distinct()
-        ->select('accountable_form_types.id', 'accountable_form_types.name')->distinct()
-        ->where('users.id', auth()->user()->id)
-        ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
-        ->get();
 
-        // $collectors = User::get();
+        if(Auth::check()){
+            $accountable_form_types_of_user = DB::table('accountable_form_types')
+            ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
+            ->join('users', 'accountable_forms.user_id', '=', 'users.id')
+            // ->select('accountable_form_types.name')->distinct()
+            ->select('accountable_form_types.id', 'accountable_form_types.name')->distinct()
+            ->where('users.id', auth()->user()->id)
+            ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
+            ->get();
 
-        $context = [
-            'accountableFormTypesOfUser' => $accountable_form_types_of_user,
-            // 'collectors' => $collectors
-        ];
-        return $context;
+            // $collectors = User::get();
+
+            $context = [
+                'accountableFormTypesOfUser' => $accountable_form_types_of_user,
+                // 'collectors' => $collectors
+            ];
+            return $context;
+        }
     }
 
     public function index() 
     {
 
+
+
         $context = $this->userContext();
+
+        // dd(auth());
+
+        // dd($context);
         // $count =  AccountableForm::count();
 
         // dd($context);
@@ -71,6 +82,9 @@ class AccountableFormController extends Controller
         // This function requires to identify start and ending accountable form numbers and user as accountable officer 
     
         // get list of users 
+        if (! Gate::allows('is-admin', auth()->user()->id)) {
+            abort(403);
+        }
 
         $users = User::get();
 

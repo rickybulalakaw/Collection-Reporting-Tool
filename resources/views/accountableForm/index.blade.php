@@ -1,6 +1,4 @@
-@extends('layouts.admin')
-
-@section('content')
+<x-app-layout>
 
 <div class="container">
  
@@ -9,4 +7,4 @@
   Home
  </h1>
 </div>
-@endsection
+</x-app-layout>

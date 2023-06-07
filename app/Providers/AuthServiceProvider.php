@@ -27,19 +27,38 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Gate::define('collector', function (User $user) {
+            return $user->function === User::IS_COLLECTOR;
+        });
+
         Gate::define('is-admin', function (User $user) {
             return $user->function === User::IS_ADMIN;
         });
 
         Gate::define('review-accountable-forms', function (User $user) {
             $allowed_function_roles = [
-                User::IS_COLLECTOR,
-                User::IS_RECEIVER,
+                // User::IS_COLLECTOR,
+                User::IS_CUSTODIAN,
                 User::IS_TREASURER
             ];
 
             return in_array($user->function, $allowed_function_roles);
         });
+
+        Gate::define('consolidator', function (User $user) {
+            return $user->function === User::IS_CONSOLIDATOR;
+        });
+
+        Gate::define('custodian', function (User $user) {
+            $allowed = [
+                User::IS_CUSTODIAN,
+                User::IS_TREASURER,
+                User::IS_ADMIN
+            ];
+            return in_array($user->function, $allowed);
+        });
+
+
 
 
     }
