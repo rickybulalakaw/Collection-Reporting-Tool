@@ -1,47 +1,35 @@
-@extends('layouts.admin')
+<x-app-layout>
 
-@section('content')
-<div class="container">
+<div class=" mx-auto w-8/12 dark:bg-gray-900">
 
-<h2 class="text-center">Create Accountable Form Type</h2>
+<h2 class="text-center text-lg text-blue-500 font-bold mb-5">Create Accountable Form Type</h2>
 
  <form action="{{ route('create-accountable-form-type')}}" method="post">
  @csrf
 
- <div class="form-group">
-  <label for="name">Name</label>
-  <input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}">
-  @error('name')
-   <div class="text-danger mt-2 text-sm">
-       {{ $message }}
-   </div>
-  @enderror
- </div>
+ 
+ <div class="col-span-6 sm:col-span-4 mb-4">
+    <x-label for="name" value="{{ __('Form Name') }}" />
+    <x-input id="name" name="name" type="number" class="mt-1 block w-full " wire:model.defer="state.name" autocomplete="name" />
+    <x-input-error for="name" class="mt-2" />
+</div>
 
- <div class="form-group">
-  <label for="number">Number (as designated by BIR)</label>
-  <input type="text" name="number" id="number" class="form-control" value="{{ old('number') }}">
-  @error('number')
-   <div class="text-danger mt-2 text-sm">
-       {{ $message }}
-   </div>
-  @enderror
+ <div class="col-span-6 sm:col-span-4 mb-4">
+    <x-label for="number" value="{{ __('Number (as designated by BIR)') }}" />
+    <x-input id="number" name="number" type="text" class="mt-1 block w-full" wire:model.defer="state.number" autocomplete="number" />
+    <x-input-error for="number" class="mt-2" />
+</div>
 
- </div>
+ <div class="col-span-6 sm:col-span-4 mb-4">
+    <x-label for="default_amount" value="{{ __('Default Amount') }}" />
+    <x-input id="default_amount" name="default_amount" type="number" class="mt-1 block w-full" wire:model.defer="state.default_amount" autocomplete="default_amount" />
+    <x-input-error for="default_amount" class="mt-2" />
+</div>
 
- <div class="form-group">
-  <label for="default_amount">Default Amount</label>
-  <input type="number" name="default_amount" id="default_amount" class="form-control" value="{{ old('default_amount') }}">
-  @error('default_amount')
-   <div class="text-danger mt-2 text-sm">
-       {{ $message }}
-   </div>
-  @enderror
- </div>
-
- <button type="submit" class="btn btn-primary">Save</button>
+<x-button class="bg-sky-600 hover:bg-sky-700   " type="submit" wire:click="submit">
+    {{ __('Save') }}
+</x-button>
 
  </form>
 </div>
-
-@endsection
+</x-app-layout>
