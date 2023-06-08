@@ -41,17 +41,27 @@ class CollectionReportController extends Controller
 
     }
 
-    public function individual (User $user) 
+    public function draft ()
     {
-        // User is a collector 
+        // This function displays the draft individual RCD of a collector 
+        // This is limited to a person with function of collector 
+        // By default, this displays the RCD of the individual for the date today 
 
+        return view ('collectionReport.individual');
+    }
 
+    public function submit ()
+    {
+        // This function is limited to today only
+    }
+
+    public function review (User $user) 
+    {
+        // This function displays the accountable forms of User
+        // This is limited to a person with function of consolidator 
 
     }
 
-    public function consolidated (User $user)
-    {
-        // User is a Supervisor 
+    
 
-    }
 }

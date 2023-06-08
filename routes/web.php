@@ -9,6 +9,7 @@ use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\CommunityTaxController;
 use App\Http\Controllers\RealPropertyController;
 use App\Http\Controllers\AccountableFormController;
+use App\Http\Controllers\CollectionReportController;
 use App\Http\Controllers\AccountableFormItemController;
 use App\Http\Controllers\AccountableFormTypeController;
 
@@ -22,10 +23,16 @@ update - save new data of edited
 destroy - delete one 
 */
 
+Route::controller(CollectionReportController::class)->group(function () {
+    Route::get('/draft-collection-report', 'draft')->name('draft-individual-report');
+    
+});
+
 Route::controller(AssignmentController::class)->group(function () {
     Route::get('/assignment/{user}', 'edit')->name('edit-assignment');
     Route::put('/assignment/{user}', 'update');
 });
+
 Route::controller(CommentController::class)->group(function () {
     Route::post('/comment/{accountableForm}', 'store')->name('submit-comment');
 });
