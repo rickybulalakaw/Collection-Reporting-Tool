@@ -63,24 +63,29 @@
     <td class="px-6 py-3"> Yes</td>
     <td class="px-6 py-3"> Juan Tamad</td>
     <td class="text-right px-6 py-3"> 10</td>
-    @can('collector')
     <td class="px-6 py-3  text-center">
-     <x-button class="bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-     <a href="#" class=" ">
-      <i class="fas fa-edit"></i>
-      
-      </a>
+      @can('collector')
+      <x-button class="bg-green-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+       <a href="#" class=" ">
+        <x-fas class="fas fa-edit"></x-fas>
+       </a>
       </x-button>
 
       <x-button class="bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
-      <a href="#">
-       <i class="fas fa-trash"></i>
-       
-      </a>
+       <a href="#">
+        <x-fas class="fas fa-trash"></x-fas>
+        
+       </a>
       </x-button>
-      
+       
+      @endcan
+
+      <x-button class=" bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ">
+       <a href="#" class="  ">
+        <x-fas class="fas fa-eye text-white" />
+       </a>
+      </x-button>
      </td>
-     @endcan
    </tr>
    <tr  class="border-b border-gray-200 dark:border-gray-700">
     <td class="px-6 py-3"> Cash Ticket </td>
@@ -100,7 +105,6 @@
      </td>
      @endcan
 
-    @can('consolidator')
     <td class="px-6 py-3 text-center">
      <x-button class=" bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded  ">
      <a href="#" class="text-blue-500   ">
@@ -109,7 +113,6 @@
       </a>
      </x-button>
      </td>
-     @endcan
    </tr>
    <tr class="border-b bg-gray-200 font-bold border-gray-200 dark:border-gray-700">
     <td class="px-6 py-3" colspan="4"> Subtotal </td>
