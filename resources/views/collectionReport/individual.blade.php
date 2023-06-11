@@ -3,11 +3,11 @@
  <div class="mx-auto w-8/12">
        
  <h2 class="font-semibold text-center mt-5 mb-5 text-xl text-gray-800 dark:text-gray-200 leading-tight">
-  {{ __('Accountable Forms I Used Today') }}
+  Accountable Forms Used Today
  </h2>
  
  <table class="table-auto w-full border-collapse border-gray-200 dark:border-gray-700  mb-5 px-6 py-3  ">
-  <thead class=" dark:bg-gray-800  ">
+  <thead >
    <tr class="border-b bg-gray-400 text-white border-gray-200 dark:border-gray-700 dark:bg-gray-900">
     <th class="px-6 py-3">Accountable Form Type</th>
     <th class="px-6 py-3">Accountable Form Number</th>
@@ -116,12 +116,10 @@
    </tr>
    <tr class="border-b bg-gray-200 font-bold border-gray-200 dark:border-gray-700">
     <td class="px-6 py-3" colspan="4"> Subtotal </td>
-    @if(auth()->user()->function == 2)
+    
     <td class="text-right px-6 py-3"> 3,060</td>
     <td class="text-right px-6 py-3"></td>
-    @else
-    <td class="text-right px-6 py-3"> 3,060</td>
-    @endif
+    
    </tr>
   </tbody>
 
