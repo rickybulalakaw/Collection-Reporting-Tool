@@ -1,3 +1,4 @@
+@props(['accountable_form_types_of_user'])
 <div>
     <!-- Sidebar backdrop (mobile only) -->
     <div
@@ -207,62 +208,84 @@
                         </div>
                     </li>
                     @endcan
-                    
-                    <!-- Finance -->
-                    @can('collector')
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['inbox'])){{ 'bg-slate-900' }}@endif">
-                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['inbox'])){{ 'hover:text-slate-200' }}@endif" href="#0">
-                            <div class="flex items-center">
-                                <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                                    <path class="fill-current @if(in_array(Request::segment(1), ['inbox'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M16 13v4H8v-4H0l3-9h18l3 9h-8Z" />
-                                    <path class="fill-current @if(in_array(Request::segment(1), ['inbox'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="m23.72 12 .229.686A.984.984 0 0 1 24 13v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1v-8c0-.107.017-.213.051-.314L.28 12H8v4h8v-4H23.72ZM13 0v7h3l-4 5-4-5h3V0h2Z" />
-                                </svg>
-                                <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Collector Tools</span>
-                            </div>
-                        </a>
-                    </li>
+                   
 
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['finance'])){{ 'bg-slate-900' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['finance']) ? 1 : 0 }} }">
-                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['finance'])){{ 'hover:text-slate-200' }}@endif" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
+                    <!-- Collector Accountable Forms -->
+                    @can('collector')
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['settings'])){{ 'bg-slate-900' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['settings']) ? 1 : 0 }} }">
+                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['settings'])){{ 'hover:text-slate-200' }}@endif" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center">
                                     <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['finance'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M13 6.068a6.035 6.035 0 0 1 4.932 4.933H24c-.486-5.846-5.154-10.515-11-11v6.067Z" />
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['finance'])){{ 'text-indigo-500' }}@else{{ 'text-slate-700' }}@endif" d="M18.007 13c-.474 2.833-2.919 5-5.864 5a5.888 5.888 0 0 1-3.694-1.304L4 20.731C6.131 22.752 8.992 24 12.143 24c6.232 0 11.35-4.851 11.857-11h-5.993Z" />
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['finance'])){{ 'text-indigo-600' }}@else{{ 'text-slate-600' }}@endif" d="M6.939 15.007A5.861 5.861 0 0 1 6 11.829c0-2.937 2.167-5.376 5-5.85V0C4.85.507 0 5.614 0 11.83c0 2.695.922 5.174 2.456 7.17l4.483-3.993Z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M19.714 14.7l-7.007 7.007-1.414-1.414 7.007-7.007c-.195-.4-.298-.84-.3-1.286a3 3 0 113 3 2.969 2.969 0 01-1.286-.3z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M10.714 18.3c.4-.195.84-.298 1.286-.3a3 3 0 11-3 3c.002-.446.105-.885.3-1.286l-6.007-6.007 1.414-1.414 6.007 6.007z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M5.7 10.714c.195.4.298.84.3 1.286a3 3 0 11-3-3c.446.002.885.105 1.286.3l7.007-7.007 1.414 1.414L5.7 10.714z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M19.707 9.292a3.012 3.012 0 00-1.415 1.415L13.286 5.7c-.4.195-.84.298-1.286.3a3 3 0 113-3 2.969 2.969 0 01-.3 1.286l5.007 5.006z" />
                                     </svg>
-                                    <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Accountable Forms</span>
+                                    <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">AF of Collector</span>
                                 </div>
                                 <!-- Icon -->
                                 <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 @if(in_array(Request::segment(1), ['finance'])){{ 'rotate-180' }}@endif" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 @if(in_array(Request::segment(1), ['settings'])){{ 'rotate-180' }}@endif" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
                                         <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
                                     </svg>
                                 </div>
                             </div>
                         </a>
-                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                            <ul class="pl-9 mt-1 @if(!in_array(Request::segment(1), ['finance'])){{ 'hidden' }}@endif" :class="open ? '!block' : 'hidden'">
-                                @if(isset($accountableFormTypesOfUser))
-                                @foreach($accountableFormTypesOfUser as $accountableFormType) 
 
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-9 mt-1 @if(!in_array(Request::segment(1), ['settings'])){{ 'hidden' }}@endif" :class="open ? '!block' : 'hidden'">
+                                @foreach($accountable_form_types_of_user as $aft)
                                 <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('credit-cards')){{ '!text-indigo-500' }}@endif" href="{{ route('record-accountable-form', $accountableFormType->id) }} ">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ $accountableFormType->name }}</span>
+                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('account')){{ '!text-indigo-500' }}@endif" href="#0">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">{{ $aft->name }}</span>
                                     </a>
                                 </li>
                                 @endforeach
-                                @endif
-                               
-                                <!-- <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('transaction-details')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Transaction Details</span>
-                                    </a>
-                                </li> -->
                             </ul>
                         </div>
+                        
+
+                    </li>
+
+                    <!-- Individual Report  -->
+                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['settings'])){{ 'bg-slate-900' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['settings']) ? 1 : 0 }} }">
+                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['settings'])){{ 'hover:text-slate-200' }}@endif" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center">
+                                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M19.714 14.7l-7.007 7.007-1.414-1.414 7.007-7.007c-.195-.4-.298-.84-.3-1.286a3 3 0 113 3 2.969 2.969 0 01-1.286-.3z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M10.714 18.3c.4-.195.84-.298 1.286-.3a3 3 0 11-3 3c.002-.446.105-.885.3-1.286l-6.007-6.007 1.414-1.414 6.007 6.007z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M5.7 10.714c.195.4.298.84.3 1.286a3 3 0 11-3-3c.446.002.885.105 1.286.3l7.007-7.007 1.414 1.414L5.7 10.714z" />
+                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M19.707 9.292a3.012 3.012 0 00-1.415 1.415L13.286 5.7c-.4.195-.84.298-1.286.3a3 3 0 113-3 2.969 2.969 0 01-.3 1.286l5.007 5.006z" />
+                                    </svg>
+                                    <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Collector Report</span>
+                                </div>
+                                <!-- Icon -->
+                                <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
+                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 @if(in_array(Request::segment(1), ['settings'])){{ 'rotate-180' }}@endif" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
+                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+
+                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
+                            <ul class="pl-9 mt-1 @if(!in_array(Request::segment(1), ['settings'])){{ 'hidden' }}@endif" :class="open ? '!block' : 'hidden'">
+                                <li class="mb-1 last:mb-0">
+                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('account')){{ '!text-indigo-500' }}@endif" href="#0">
+                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Draft RCD</span>
+                                    </a>
+                                </li>
+                        
+
+                            </ul>
+                        </div>
+                        
+
                     </li>
                     @endcan
+
                     <!-- Admin Tools -->
                     @can('is-admin')
 
@@ -396,62 +419,7 @@
                             </div>
                         </a>
                     </li>
-                    <!-- Settings -->
-                    <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['settings'])){{ 'bg-slate-900' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['settings']) ? 1 : 0 }} }">
-                        <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['settings'])){{ 'hover:text-slate-200' }}@endif" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">
-                            <div class="flex items-center justify-between">
-                                <div class="flex items-center">
-                                    <svg class="shrink-0 h-6 w-6" viewBox="0 0 24 24">
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M19.714 14.7l-7.007 7.007-1.414-1.414 7.007-7.007c-.195-.4-.298-.84-.3-1.286a3 3 0 113 3 2.969 2.969 0 01-1.286-.3z" />
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M10.714 18.3c.4-.195.84-.298 1.286-.3a3 3 0 11-3 3c.002-.446.105-.885.3-1.286l-6.007-6.007 1.414-1.414 6.007 6.007z" />
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-500' }}@else{{ 'text-slate-600' }}@endif" d="M5.7 10.714c.195.4.298.84.3 1.286a3 3 0 11-3-3c.446.002.885.105 1.286.3l7.007-7.007 1.414 1.414L5.7 10.714z" />
-                                        <path class="fill-current @if(in_array(Request::segment(1), ['settings'])){{ 'text-indigo-300' }}@else{{ 'text-slate-400' }}@endif" d="M19.707 9.292a3.012 3.012 0 00-1.415 1.415L13.286 5.7c-.4.195-.84.298-1.286.3a3 3 0 113-3 2.969 2.969 0 01-.3 1.286l5.007 5.006z" />
-                                    </svg>
-                                    <span class="text-sm font-medium ml-3 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Settings</span>
-                                </div>
-                                <!-- Icon -->
-                                <div class="flex shrink-0 ml-2 lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">
-                                    <svg class="w-3 h-3 shrink-0 ml-1 fill-current text-slate-400 @if(in_array(Request::segment(1), ['settings'])){{ 'rotate-180' }}@endif" :class="open ? 'rotate-180' : 'rotate-0'" viewBox="0 0 12 12">
-                                        <path d="M5.9 11.4L.5 6l1.4-1.4 4 4 4-4L11.3 6z" />
-                                    </svg>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="lg:hidden lg:sidebar-expanded:block 2xl:block">
-                            <ul class="pl-9 mt-1 @if(!in_array(Request::segment(1), ['settings'])){{ 'hidden' }}@endif" :class="open ? '!block' : 'hidden'">
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('account')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">My Account</span>
-                                    </a>
-                                </li>
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('notifications')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">My Notifications</span>
-                                    </a>
-                                </li>
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('apps')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Connected Apps</span>
-                                    </a>
-                                </li>
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('plans')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Plans</span>
-                                    </a>
-                                </li>
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('billing')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Billing & Invoices</span>
-                                    </a>
-                                </li>
-                                <li class="mb-1 last:mb-0">
-                                    <a class="block text-slate-400 hover:text-slate-200 transition duration-150 truncate @if(Route::is('feedback')){{ '!text-indigo-500' }}@endif" href="#0">
-                                        <span class="text-sm font-medium lg:opacity-0 lg:sidebar-expanded:opacity-100 2xl:opacity-100 duration-200">Give Feedback</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
+
                     <!-- Utility -->
                     <li class="px-3 py-2 rounded-sm mb-0.5 last:mb-0 @if(in_array(Request::segment(1), ['utility'])){{ 'bg-slate-900' }}@endif" x-data="{ open: {{ in_array(Request::segment(1), ['utility']) ? 1 : 0 }} }">
                         <a class="block text-slate-200 hover:text-white truncate transition duration-150 @if(in_array(Request::segment(1), ['utility'])){{ 'hover:text-slate-200' }}@endif" href="#0" @click.prevent="sidebarExpanded ? open = !open : sidebarExpanded = true">

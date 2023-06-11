@@ -27,7 +27,7 @@ class AccountableFormController extends Controller
 
     private function userContext(){
 
-        if(Auth::check()){
+        // if(Auth::check()){
             $accountable_form_types_of_user = DB::table('accountable_form_types')
             ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
             ->join('users', 'accountable_forms.user_id', '=', 'users.id')
@@ -40,38 +40,28 @@ class AccountableFormController extends Controller
             // $collectors = User::get();
 
             $context = [
-                'accountableFormTypesOfUser' => $accountable_form_types_of_user,
+                'accountable_form_types_of_user' => $accountable_form_types_of_user,
                 // 'collectors' => $collectors
             ];
             return $context;
-        }
+        // }
     }
 
     public function index() 
     {
 
-
-
         $context = $this->userContext();
 
-        // dd(auth());
+        // dd ($context);
 
-        // dd($context);
-        // $count =  AccountableForm::count();
-
-        // dd($context);
-        // get accountable form types assigned to user 
-
+        return view('accountableForm.index', 
+           ['accountable_form_types_of_user' => $context['accountable_form_types_of_user']]
         
-        // return $count;
-
-        // $accountable_form_types = DB::table('accountable_form_types')->get();
-        // dd($accountable_form_types);
-
-        // return $accountable_form_types;
-
-        // var_dump($accountable_form_types);
-        return view('accountableForm.index', $context);
+        ); 
+    
+    
+            // ->with('accountable_form_types_of_user', $accountable_form_types_of_user)
+            // ->with('accountable_form_types_of_user', $context['accountable_form_types_of_user']);
 
     }
 
