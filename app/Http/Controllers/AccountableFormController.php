@@ -27,13 +27,14 @@ class AccountableFormController extends Controller
 
     private function userContext(){
 
-        // if(Auth::check()){
+
+        
             $accountable_form_types_of_user = DB::table('accountable_form_types')
             ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
             ->join('users', 'accountable_forms.user_id', '=', 'users.id')
             // ->select('accountable_form_types.name')->distinct()
             ->select('accountable_form_types.id', 'accountable_form_types.name')->distinct()
-            ->where('users.id', auth()->user()->id)
+            ->where('accountable_forms.user_id', auth()->user()->id)
             ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
             ->get();
 
@@ -44,25 +45,16 @@ class AccountableFormController extends Controller
                 // 'collectors' => $collectors
             ];
             return $context;
-        // }
+        
     }
 
     public function index() 
     {
 
+        // $user = User::where('id', auth()->user()->id)->first();
         $context = $this->userContext();
 
-        // dd ($context);
-
-        return view('accountableForm.index', 
-           ['accountable_form_types_of_user' => $context['accountable_form_types_of_user']]
-        
-        ); 
-    
-    
-            // ->with('accountable_form_types_of_user', $accountable_form_types_of_user)
-            // ->with('accountable_form_types_of_user', $context['accountable_form_types_of_user']);
-
+        return view('accountableForm.index', $context); 
     }
 
     public function create()
@@ -136,10 +128,9 @@ class AccountableFormController extends Controller
 
 
         $user = auth()->user()->id;
+        // $user = User::where('id', auth()->user()->id)->first();
 
         $context = $this->userContext();
-
-        
 
         // get smallest number based on user assigned to user and accountable form type
 
@@ -190,8 +181,18 @@ class AccountableFormController extends Controller
             $context['regular_af'] = true;
         }
 
+        $accountable_form_types_of_user = DB::table('accountable_form_types')
+        ->join('accountable_forms', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
+        ->join('users', 'accountable_forms.user_id', '=', 'users.id')
+        // ->select('accountable_form_types.name')->distinct()
+        ->select('accountable_form_types.id', 'accountable_form_types.name')->distinct()
+        ->where('accountable_forms.user_id', auth()->user()->id)
+        ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
+        ->get();
         
-        return view('accountableForm.record', $context);
+        return view('accountableForm.record', 
+                $context,
+            );
 
     }
 

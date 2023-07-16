@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-app-layout :accountable_form_types_of_user="$accountable_form_types_of_user">
 
 <div class="mx-auto lg:container p-6">
  <h1 class="text-3xl text-center ">Record {{ $name }} </h1>

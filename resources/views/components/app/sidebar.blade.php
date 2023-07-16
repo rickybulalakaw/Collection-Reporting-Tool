@@ -1,4 +1,4 @@
-@props(['accountable_form_types_of_user'])
+@props(['accountable_form_types_of_user' => []])
 <div>
     <!-- Sidebar backdrop (mobile only) -->
     <div
