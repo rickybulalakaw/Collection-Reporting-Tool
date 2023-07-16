@@ -1,19 +1,18 @@
-@extends('layouts.admin')
+<x-app-layout :accountable_form_types_of_user="$accountable_form_types_of_user">
 
-@section('content')
-<div class="container">
- <h1 class="text-center">Accountable Form</h1>
+<div class="mx-auto lg:container p-6 flex flex-col space-y-12 lg:w-1/2">
+ <h1 class="text-center text-3xl">Accountable Form</h1>
 
  @if($method == 'review-accountable-form')
   <div>
-    <p class="alert alert-info">
+    <p class="bg-green-300 p-6 text-center ">
       Recommended process for reviewers: Count the money first and check that the total in the individual RCD is the same as the total in the RCD. If the money is correct, then proceed with reviewing individual accountable forms.
 
     </p>
   </div>
   @endif
 
-  <table class="table table-light table-hover table-striped">
+  <table class="table-auto w-100">
     <tr>
       <td class="text-bold">Payor</td>
       <td>{{ $accountableForm->payor }}</td>
@@ -36,7 +35,7 @@
 
  @if( $method)
   @if($method == 'add-accountable-form-item')
-  <div class="inline">
+  <div class="row">
    <form action="{{ route('add-accountable-form-item', $accountableForm->id) }}" method="post"> 
     @csrf
 
@@ -68,7 +67,8 @@
      </div>
 
      <div class="col-lg">
-      <button class="btn btn-primary btn-block" name="submit" type="submit">Add Item</button>
+
+      <x-button class="bg-blue-500 text-light mt-3 " name="submit" type="submit">Add Item</x-button>
 
      </div>
 
@@ -189,4 +189,4 @@
 
 </div>
 
-@endsection
+</x-app-layout>
