@@ -27,12 +27,13 @@ class CollectionReportController extends Controller
         ->get();
 
         // $collectors = User::where('status', User::STATUS_ACTIVE)->get();
-        $collectors = User::get();
 
+        $collectors = User::where('function', '=', User::IS_COLLECTOR)->get();
         $context = [
-            'accountableFormTypesOfUser' => $accountable_form_types_of_user,
+            'accountable_form_types_of_user' => $accountable_form_types_of_user,
             'collectors' => $collectors
         ];
+        
         return $context;
     }
     
@@ -47,7 +48,35 @@ class CollectionReportController extends Controller
         // This is limited to a person with function of collector 
         // By default, this displays the RCD of the individual for the date today 
 
-        return view ('collectionReport.individual');
+        $context = $this->userContext();
+
+        // dd($context);
+        // $accountable_forms_for_draft = AccountableForm::with([ 'accountable_form_items'])
+        // ->where('user_id', auth()->user()->id)
+        // // with(['accountable_form_type'])
+        // ->where('use_status', AccountableForm::IS_USED)
+        // ->where('accounting_status', AccountableForm::IS_SUBMITTED)
+        // ->where('form_date', date('Y-m-d'))
+        // ->get();
+
+        $accountable_forms_for_draft = DB::table('accountable_forms')
+        ->join('accountable_form_types', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
+        ->join('accountable_form_items', 'accountable_forms.id', '=', 'accountable_form_items.accountable_form_id') 
+        ->select('accountable_forms.id as form_id', 'accountable_forms.accountable_form_number as form_number', 'accountable_forms.form_date as form_date', 'accountable_forms.payor as payor', 'accountable_form_types.name as form_type', DB::raw('SUM(accountable_form_items.amount) AS total_amount'))
+        // ->sum('accountable_form_items.amount','total_amount')
+        ->groupBy('accountable_forms.id')
+        ->where('accountable_forms.user_id', auth()->user()->id)
+        ->where('accountable_forms.use_status', AccountableForm::IS_USED)
+        ->where('accountable_forms.accounting_status', AccountableForm::IS_SUBMITTED)
+        ->where('accountable_forms.form_date', date('Y-m-d'))
+        ->orderBy('accountable_form_types.name', 'asc')
+        ->get();
+
+        // dd($accountable_forms_for_draft);
+
+        $context['used_accountable_forms'] = $accountable_forms_for_draft;
+
+        return view ('collectionReport.individual', $context);
     }
 
     public function submit ()
