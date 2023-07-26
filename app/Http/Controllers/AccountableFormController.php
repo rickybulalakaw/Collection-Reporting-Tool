@@ -286,12 +286,9 @@ class AccountableFormController extends Controller
 
             AccountableFormItem::create([
                 'accountable_form_id' => $request->accountable_form_id,
-
             ]);
 
             return redirect()->route('record-real-property-tax-receipt', $request->accountable_form_id ); 
-
-
 
         }else {
             // redirect to generic form to enter type of data one by one 
@@ -299,13 +296,7 @@ class AccountableFormController extends Controller
 
         }
 
-        
-
-
-
-
         // if no other data requirements, go to enter accountable form items linked to accountable form id 
-
 
         // return redirect()->route('show-accountable-form', $request->accountable_form_id );
     }
