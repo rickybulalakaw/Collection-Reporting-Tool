@@ -32,7 +32,7 @@
 
       <!-- Edit  -->
       <x-button class="bg-slate-400  hover:bg-slate-700 text-white font-bold py-2 px-2 rounded">
-       <a href="#" class=" ">
+       <a href="{{ route('add-accountable-form-item', $af->form_id) }} " class=" ">
         <x-fas class="fas fa-edit text-white "></x-fas>
        </a>
       </x-button>
@@ -59,7 +59,7 @@
    <tr class="border-b bg-gray-200 font-bold border-gray-200 dark:border-gray-700">
     <td class="px-6 py-3" colspan="4"> Subtotal </td>
     
-    <td class="text-right px-6 py-3"> 3,060</td>
+    <td class="text-right px-6 py-3">{{ $used_accountable_forms->sum('total_amount') }} </td>
     <td class="text-right px-6 py-3"></td>
     
    </tr>
