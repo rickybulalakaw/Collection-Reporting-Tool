@@ -1,7 +1,7 @@
 <x-app-layout :accountable_form_types_of_user="$accountable_form_types_of_user">
 
-<div class="mx-auto lg:container p-6 flex flex-col space-y-12 lg:w-1/2">
- <h1 class="text-center text-3xl">Accountable Form</h1>
+<div class="mx-auto lg:container flex flex-col space-y-12 lg:w-10/12">
+ <h1 class="text-center text-3xl">Accountable Form </h1>
 
  @if($method == 'review-accountable-form')
   <div>
@@ -12,7 +12,7 @@
   </div>
   @endif
 
-  <table class="table-auto w-100">
+  <table class="table-auto w-full">
     <tr>
       <td class="text-bold">Payor</td>
       <td>{{ $accountableForm->payor }}</td>
@@ -35,14 +35,11 @@
 
  @if( $method)
   @if($method == 'add-accountable-form-item')
-  <div class="row">
-   <form action="{{ route('add-accountable-form-item', $accountableForm->id) }}" method="post"> 
+    
+  <form action="{{ route('add-accountable-form-item', $accountableForm->id) }}" method="post"> 
     @csrf
 
-    <div class="row">
-     <div class="col-lg">
-      <div class="form-group ">
-       <select name="revenue_type_id" id="revenue_type_id" class="form-control" autofocus>
+       <select name="revenue_type_id" id="revenue_type_id" class="w-full rounded m-1" autofocus>
         <option value="">Select Revenue Type</option>
         @foreach($revenue_types as $revenuetype) 
         <option value="{{ $revenuetype->id }}">{{ $revenuetype->single_display }}</option>
@@ -51,70 +48,69 @@
        @error('revenue_type_id')
        <span class="text-danger">{{ $message }}</span>
        @enderror
-      </div>
 
-     </div>
-
-     <div class="col-lg">
-      <div class="form-group ">
-       <input type="number" name="amount" id="amount" class="form-control" placeholder="Amount">
+       <x-input type="number" name="amount" id="amount" class="w-full m-1" placeholder="Amount"></x-input>
        @error('amount')
        <span class="text-danger">{{ $message }}</span>
        @enderror
-      </div>    
       <input type="hidden" name="accountable_form_id" value="{{ $accountableForm->id }}">
 
-     </div>
-
-     <div class="col-lg">
-
-      <x-button class="bg-blue-500 text-light mt-3 " name="submit" type="submit">Add Item</x-button>
-
-     </div>
 
 
-    </div>
+      <x-button class="bg-blue-500 text-light m-1 w-full" name="submit" type="submit">Add Item</x-button>
+
+
+
    </form>
+   </div>
 
-  </div>
   
   @endif 
  @endif
 
  @if($accountableFormItemsOfForm->count() > 0)
- <table class="table table-striped">
+<div class="flex mx-auto mt-5 w-10/12 ">
+ <table class="table-auto w-full border-red-300">
   <thead>
    <tr>
     <!-- <th>Counter</th> -->
-    <th class="text-center"  style="width:60%">Revenue Type</th>
+    <th class="text-center"  style="width:50%">Revenue Type</th>
     <th class="text-center"  style="width:30%">Amount</th>
-    <th class="text-center" style="width:10%">Actions</th>
+    <th class="text-center" style="width:20%">Actions</th>
    </tr>
   </thead>
   <tbody>
    @foreach($accountableFormItemsOfForm as $afi) 
-   <tr>
+   <tr class="border-red-400 border-solid border-spacing-5">
     <!-- <td></td> -->
     
-    <td>{{ $afi->revenue_type->single_display }}</td>
+    <td class="">{{ $afi->revenue_type->single_display }}</td>
     <td class="text-right">{{ number_format($afi->amount, 2) }}</td>
-    <td class="text-center form-inline">
+    <td class="text-center flex justify-center">
       
       
-      <a href=""  class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> </a> &nbsp;
+      <!-- <a href=""  class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> </a>  -->
+      <x-button class="bg-slate-400  hover:bg-slate-700 text-white font-bold p-1 rounded">
+        <x-fas class="fas fa-edit text-white "></x-fas>
+      </x-button>
+      &nbsp;
       
       <form action="{{ route('delete-accountable-form-item', $afi->id) }} " method="post" class="form-inline">
         @csrf
         @method('DELETE')
         <input type="hidden" name="accountable_form_id" value="{{ $afi->accountable_form_id }} ">
-        <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> </button>
+
+        <x-button class="bg-red-400  hover:bg-red-700 text-white font-bold p-1 rounded" type="submit">
+          <x-fas class="fas fa-trash text-white "></x-fas>
+        </x-button>
+        <!-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> </button> -->
       </form>
     </td>
    </tr>
    @endforeach
-   <tr class="bg-secondary">
-    <td class="text-bold">Total</td>
-    <td class="text-bold text-right">{{ number_format($accountableFormItemsOfForm->sum('amount'),2) }} </td>
+   <tr class="">
+    <td class="font-bold ">Total</td>
+    <td class="font-bold text-right">{{ number_format($accountableFormItemsOfForm->sum('amount'),2) }} </td>
     <td > </td>
    </tr>
   </tbody>
@@ -122,6 +118,7 @@
  </table>
  @else 
  <p class="text-bold">There is no accountable form item for this number.</p>
+</div>
  @endif
 
  @if($method == 'review-accountable-form')
