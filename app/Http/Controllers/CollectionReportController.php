@@ -72,6 +72,9 @@ class CollectionReportController extends Controller
         ->orderBy('accountable_form_types.name', 'asc')
         ->get();
 
+        if(count($accountable_forms_for_draft) < 1){
+            return redirect()->route('home')->with('error', 'No draft RCD found for today');
+        }
         // dd($accountable_forms_for_draft);
 
         $context['used_accountable_forms'] = $accountable_forms_for_draft;

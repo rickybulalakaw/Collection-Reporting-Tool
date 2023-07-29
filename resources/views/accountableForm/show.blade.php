@@ -31,6 +31,9 @@
     </tr>
     
   </table>
+  <x-button class="w-full text-center bg-slate-500 justify-center">
+    <x-fas class="fas fa-edit text-white "></x-fas>&nbsp; Edit Form Details
+  </x-button>
 
 
  @if( $method)
@@ -46,16 +49,14 @@
         @endforeach
        </select>
        @error('revenue_type_id')
-       <span class="text-danger">{{ $message }}</span>
+       <span class="text-red-600 px-2">{{ $message }}</span>
        @enderror
 
        <x-input type="number" name="amount" id="amount" class="w-full m-1" placeholder="Amount"></x-input>
        @error('amount')
-       <span class="text-danger">{{ $message }}</span>
+       <span class="text-red-600 px-2 ">{{ $message }}</span>
        @enderror
       <input type="hidden" name="accountable_form_id" value="{{ $accountableForm->id }}">
-
-
 
       <x-button class="bg-blue-500 text-light m-1 w-full" name="submit" type="submit">Add Item</x-button>
 
@@ -68,8 +69,8 @@
   @endif 
  @endif
 
+ <div class="flex mx-auto mt-5 w-10/12 ">
  @if($accountableFormItemsOfForm->count() > 0)
-<div class="flex mx-auto mt-5 w-10/12 ">
  <table class="table-auto w-full border-red-300">
   <thead>
    <tr>
@@ -79,36 +80,29 @@
     <th class="text-center" style="width:20%">Actions</th>
    </tr>
   </thead>
-  <tbody>
+  <tbody class="">
    @foreach($accountableFormItemsOfForm as $afi) 
-   <tr class="border-red-400 border-solid border-spacing-5">
+   <tr class="border-red-400  border-solid border-spacing-5">
     <!-- <td></td> -->
     
     <td class="">{{ $afi->revenue_type->single_display }}</td>
     <td class="text-right">{{ number_format($afi->amount, 2) }}</td>
     <td class="text-center flex justify-center">
       
-      
-      <!-- <a href=""  class="btn btn-primary btn-sm"><i class="fa fa-edit" aria-hidden="true"></i> </a>  -->
-      <x-button class="bg-slate-400  hover:bg-slate-700 text-white font-bold p-1 rounded">
-        <x-fas class="fas fa-edit text-white "></x-fas>
-      </x-button>
-      &nbsp;
-      
       <form action="{{ route('delete-accountable-form-item', $afi->id) }} " method="post" class="form-inline">
         @csrf
         @method('DELETE')
         <input type="hidden" name="accountable_form_id" value="{{ $afi->accountable_form_id }} ">
 
-        <x-button class="bg-red-400  hover:bg-red-700 text-white font-bold p-1 rounded" type="submit">
-          <x-fas class="fas fa-trash text-white "></x-fas>
-        </x-button>
-        <!-- <button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i> </button> -->
+        <!-- <x-button class="bg-red-400  hover:bg-red-700 text-white font-bold p-1 rounded" type="submit">
+          <x-fas class="fas fa-trash text-red-400  hover:text-red-700 "></x-fas>
+        </x-button> -->
+        <button type="submit"><i class="fas fa-trash text-xl text-slate-400    hover:text-red-700 " ></i> </button>
       </form>
     </td>
    </tr>
    @endforeach
-   <tr class="">
+   <tr class="border-x-3 border-b-neutral-500 ">
     <td class="font-bold ">Total</td>
     <td class="font-bold text-right">{{ number_format($accountableFormItemsOfForm->sum('amount'),2) }} </td>
     <td > </td>
@@ -118,8 +112,8 @@
  </table>
  @else 
  <p class="text-bold">There is no accountable form item for this number.</p>
-</div>
  @endif
+</div>
 
  @if($method == 'review-accountable-form')
  <div class="bg-light bordered rounded">
