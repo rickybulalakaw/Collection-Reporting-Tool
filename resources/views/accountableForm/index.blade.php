@@ -4,8 +4,8 @@
 <div class="container">
  
 
- <h1 class="text-center text-secondary">
-  Home 2
+ <h1 class="font-inter  text-3xl text-slate-700 text-center ">
+  Homepage  
  </h1>
 
 
