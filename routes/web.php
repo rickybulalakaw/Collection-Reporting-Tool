@@ -12,6 +12,7 @@ use App\Http\Controllers\AccountableFormController;
 use App\Http\Controllers\CollectionReportController;
 use App\Http\Controllers\AccountableFormItemController;
 use App\Http\Controllers\AccountableFormTypeController;
+use App\Http\Controllers\RevenueTypeController;
 
 /*
 index - show all 
@@ -47,6 +48,14 @@ Route::controller(CommunityTaxController::class)->group(function () {
     Route::POST('/register-community-tax-individual/{accountableForm}', 'storeIndividual');
     Route::get('/register-community-tax-corporate/{accountableForm}', 'createCorporate')->name('record-community-tax-corporate');
     Route::POST('/register-community-tax-corporate', 'storeCorporate');
+});
+
+Route::controller(RevenueTypeController::class)->group(function () {
+    Route::get('/revenue-type-index', 'index')->name('revenue-type-index');
+    Route::get('/create-revenue-type', 'create')->name('create-revenue-type');
+    Route::POST('/create-revenue-type', 'store');
+    // Route::get('/register-community-tax-corporate/{accountableForm}', 'createCorporate')->name('record-community-tax-corporate');
+    // Route::POST('/register-community-tax-corporate', 'storeCorporate');
 });
 
 Route::controller(RealPropertyController::class)->group(function () {
