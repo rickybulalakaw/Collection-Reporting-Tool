@@ -48,6 +48,15 @@ class CommunityTaxController extends Controller
     {
         // dd ($accountableForm);
 
+        // check that AccountableForm is not present in accountable_form_items table 
+
+        $check_items_with_accountable_form_id = AccountableFormItem::where('accountable_form_id', $accountableForm->id)->get();
+
+        if(count($check_items_with_accountable_form_id) > 0){
+            return redirect()->route('home')->with('error', 'Accountable Form already used');
+        
+        }
+
         $allowed_types = [
             AccountableFormType::CTC_CORPORATION,
             AccountableFormType::CTC_INDIVIDUAL
@@ -102,8 +111,8 @@ class CommunityTaxController extends Controller
             'revenue_type_id' => RevenueType::CTC_C1
         ]);
 
-        return redirect()->route('home')->with('success', 'CTC Payment Successfully Recorded') ;
-        // return redirect()->route('record-accountable-form', $request->accountable_form_id)->with('success', 'CTC Payment Successfully Recorded') ;
+        // return redirect()->route('home')->with('success', 'CTC Payment Successfully Recorded') ;
+        return redirect()->route('record-accountable-form', $request->accountable_form_id)->with('success', 'CTC Payment Successfully Recorded') ;
 
 
 
