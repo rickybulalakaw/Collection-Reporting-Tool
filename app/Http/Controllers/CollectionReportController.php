@@ -59,7 +59,7 @@ class CollectionReportController extends Controller
         ->groupBy('accountable_forms.id')
         ->where('accountable_forms.user_id', auth()->user()->id)
         ->whereIn('accountable_forms.use_status', [AccountableForm::IS_USED, AccountableForm::IS_CANCELLED])
-        ->where('accountable_forms.accounting_status', AccountableForm::IS_SUBMITTED)
+        ->whereIn('accountable_forms.accounting_status', [AccountableForm::IS_SUBMITTED])
         ->where('accountable_forms.form_date', date('Y-m-d'))
         ->orderBy('accountable_form_types.name', 'asc')
         ->get();
