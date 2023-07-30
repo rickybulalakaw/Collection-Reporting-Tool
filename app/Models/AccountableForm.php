@@ -31,8 +31,10 @@ class AccountableForm extends Model
     // accounting status 
     public const IS_SUBMITTED = 1;
     public const IS_REVIEWED_CONSOLIDATOR = 2;
-    public const IS_REVIEWED_ENDORSER = 3;
-    public const IS_APPROVED = 5;
+    public const IS_RETURNED_CONSOLIDATOR = 3;
+    public const IS_REVIEWED_ENDORSER = 5;
+    public const IS_RETURNED_ENDORSER = 6;
+    public const IS_APPROVED = 7;
 
 
     public function user () {
