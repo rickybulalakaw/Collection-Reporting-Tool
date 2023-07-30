@@ -51,22 +51,14 @@ class CollectionReportController extends Controller
         $context = $this->userContext();
 
         // dd($context);
-        // $accountable_forms_for_draft = AccountableForm::with([ 'accountable_form_items'])
-        // ->where('user_id', auth()->user()->id)
-        // // with(['accountable_form_type'])
-        // ->where('use_status', AccountableForm::IS_USED)
-        // ->where('accounting_status', AccountableForm::IS_SUBMITTED)
-        // ->where('form_date', date('Y-m-d'))
-        // ->get();
 
         $accountable_forms_for_draft = DB::table('accountable_forms')
         ->join('accountable_form_types', 'accountable_forms.accountable_form_type_id', '=', 'accountable_form_types.id')
-        ->join('accountable_form_items', 'accountable_forms.id', '=', 'accountable_form_items.accountable_form_id') 
-        ->select('accountable_forms.id as form_id', 'accountable_forms.accountable_form_number as form_number', 'accountable_forms.form_date as form_date', 'accountable_forms.payor as payor', 'accountable_form_types.name as form_type', DB::raw('SUM(accountable_form_items.amount) AS total_amount'))
-        // ->sum('accountable_form_items.amount','total_amount')
+        ->leftJoin('accountable_form_items', 'accountable_forms.id', '=', 'accountable_form_items.accountable_form_id') 
+        ->select('accountable_forms.id as form_id', 'accountable_forms.accountable_form_number as form_number', 'accountable_forms.form_date as form_date', 'accountable_forms.use_status as use_status', 'accountable_forms.payor as payor', 'accountable_form_types.name as form_type', DB::raw('SUM(accountable_form_items.amount) AS total_amount'))
         ->groupBy('accountable_forms.id')
         ->where('accountable_forms.user_id', auth()->user()->id)
-        ->where('accountable_forms.use_status', AccountableForm::IS_USED)
+        ->whereIn('accountable_forms.use_status', [AccountableForm::IS_USED, AccountableForm::IS_CANCELLED])
         ->where('accountable_forms.accounting_status', AccountableForm::IS_SUBMITTED)
         ->where('accountable_forms.form_date', date('Y-m-d'))
         ->orderBy('accountable_form_types.name', 'asc')
@@ -78,6 +70,7 @@ class CollectionReportController extends Controller
         // dd($accountable_forms_for_draft);
 
         $context['used_accountable_forms'] = $accountable_forms_for_draft;
+        $context['use_status_cancelled'] = AccountableForm::IS_CANCELLED;
 
         return view ('collectionReport.individual', $context);
     }

@@ -1,4 +1,3 @@
-
 <x-app-layout :accountable_form_types_of_user="$accountable_form_types_of_user">
  <div class="mx-auto w-10/12">
        
@@ -24,33 +23,28 @@
    <tr class="border-b border-gray-200 dark:border-gray-700">
     <td class="px-6 py-3"> {{ $af->form_type }} </td>
     <td class="px-6 py-3 text-right "> {{ $af->form_number }}</td>
-    <td class="px-6 py-3"> Yes</td>
+    <td class="px-6 py-3"> @if($af->use_status == $use_status_cancelled) No @else Yes @endif </td>
     <td class="px-6 py-3"> {{ $af->payor  }} </td>
     <td class="text-right px-6 py-3 "> {{ $af->total_amount   }} </td>
     @can('collector')
-    <td class="px-6 py-3">
+    <td class="px-6 py-3 text-center">
 
-      <!-- Edit  -->
-      <x-button class="bg-slate-400  hover:bg-slate-700 text-white font-bold py-2 px-2 rounded">
-       <a href="{{ route('add-accountable-form-item', $af->form_id) }} " class=" ">
-        <x-fas class="fas fa-edit text-white "></x-fas>
-       </a>
-      </x-button>
-           <!-- View  -->
-      <x-button class="bg-green-400  hover:bg-green-700  text-white font-bold py-2 px-2 rounded">
-       <a href="#" class=" ">
-        <x-fas class="fas fa-eye text-white "></x-fas>
-       </a>
-      </x-button>
+          <!-- View  -->
+          <a href="#" class=" ">
+               <x-fas class="fas fa-eye text-slate-300 hover:text-amber-700 "></x-fas>
+          </a>
 
-       <!-- Delete  -->
-       <x-button class="bg-red-400  hover:bg-red-700  text-white font-bold py-2 px-2 rounded">
-       <a href="#" class=" ">
-        <x-fas class="fas fa-trash text-white "></x-fas>
-       </a>
-      </x-button>
 
-       </td>
+          <!-- Edit  -->
+          <a href="{{ route('add-accountable-form-item', $af->form_id) }} " class=" ">
+               <x-fas class="fas fa-edit text-slate-300 hover:text-cyan-500 "></x-fas>
+          </a>
+          <!-- Delete  -->
+          <a href="#" class=" ">
+          <x-fas class="fas fa-trash text-slate-300 hover:text-red-700 "></x-fas>
+          </a>
+
+     </td>
     @endcan
    </tr>
 
