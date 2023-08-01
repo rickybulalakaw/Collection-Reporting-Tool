@@ -1,4 +1,4 @@
-@props(['accountable_form_types_of_user' => []])
+@props(['accountable_form_types_of_user' => [], 'message_count'=>[]])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -14,7 +14,8 @@
         <!-- Font Awesome -->
   
         <link rel="stylesheet" href="{{ asset('adminlte/plugins/fontawesome-free/css/all.min.css') }}">
-
+  
+        
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
 
@@ -56,7 +57,7 @@
             <!-- Content area -->
             <div class="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden @if($attributes['background']){{ $attributes['background'] }}@endif" x-ref="contentarea">
 
-                <x-app.header  />
+                <x-app.header :message_count="$message_count" />
                 <x-flash-message />
 
                 <main>
@@ -67,6 +68,10 @@
 
         </div>
 
+        
         @livewireScripts
+        @powerGridScripts
+
+        
     </body>
 </html>

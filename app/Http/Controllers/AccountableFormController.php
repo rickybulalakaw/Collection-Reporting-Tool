@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Comment;
+use App\Models\Message;
 use App\Models\RevenueType;
 use App\Models\CommunityTax;
 use App\Models\RealProperty;
@@ -40,8 +41,20 @@ class AccountableFormController extends Controller
 
             // $collectors = User::get();
 
+            // get messages 
+
+
+            $message_count = DB::table('messages')
+            ->select('sender.first_name as first_name', 'sender.last_name as last_name', 'messages.subject as subject', 'messages.created_at as created_at')
+            ->join('users as recipient', 'messages.recipient_user_id', '=', 'recipient.id')
+            ->join('users as sender', 'messages.user_id', '=', 'sender.id')
+            ->where('messages.recipient_user_id', auth()->user()->id)
+            ->where('messages.status', Message::STATUS_UNREAD)
+            ->count();
+
             $context = [
                 'accountable_form_types_of_user' => $accountable_form_types_of_user,
+                'message_count' => $message_count,
                 // 'collectors' => $collectors
             ];
             return $context;
@@ -53,6 +66,8 @@ class AccountableFormController extends Controller
 
         // $user = User::where('id', auth()->user()->id)->first();
         $context = $this->userContext();
+
+        // dd($context);
 
         return view('accountableForm.index', $context); 
     }
@@ -125,7 +140,6 @@ class AccountableFormController extends Controller
 
     public function record (AccountableFormType $accountableFormType){ 
         // function generates smallest number of accountable form based on type and current user 
-
 
         $user = auth()->user()->id;
         // $user = User::where('id', auth()->user()->id)->first();

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Date;
 
 class CollectionReportController extends Controller
 {
@@ -29,9 +31,20 @@ class CollectionReportController extends Controller
         // $collectors = User::where('status', User::STATUS_ACTIVE)->get();
 
         $collectors = User::where('function', '=', User::IS_COLLECTOR)->get();
+
+        $message_count = DB::table('messages')
+            ->select('sender.first_name as first_name', 'sender.last_name as last_name', 'messages.subject as subject', 'messages.created_at as created_at')
+            ->join('users as recipient', 'messages.recipient_user_id', '=', 'recipient.id')
+            ->join('users as sender', 'messages.user_id', '=', 'sender.id')
+            ->where('messages.recipient_user_id', auth()->user()->id)
+            ->where('messages.status', Message::STATUS_UNREAD)
+            ->count();
+
+
         $context = [
             'accountable_form_types_of_user' => $accountable_form_types_of_user,
-            'collectors' => $collectors
+            'collectors' => $collectors,
+            'message_count' => $message_count,
         ];
         
         return $context;
@@ -72,6 +85,20 @@ class CollectionReportController extends Controller
         $context['used_accountable_forms'] = $accountable_forms_for_draft;
         $context['use_status_cancelled'] = AccountableForm::IS_CANCELLED;
 
+        // get messages 
+
+        $subject = "Individual RCD for " . date('Y-m-d');
+
+        // $messages = DB::table('messages')->where('subject', $subject)->get();
+        $messages = Message::with('user')->where('subject', $subject)->get();
+        $context['messages'] = $messages;
+
+
+
+        // $context['supervisor_id'] = auth()->user()->supervisor_id;
+
+        // dd($context);
+
         return view ('collectionReport.individual', $context);
     }
 
@@ -84,6 +111,14 @@ class CollectionReportController extends Controller
     {
         // This function displays the accountable forms of User
         // This is limited to a person with function of consolidator 
+
+    }
+
+    public function viewIndividual(User $user, $date = null)
+    {
+
+        // $user is the person who submitted the individual report 
+
 
     }
 

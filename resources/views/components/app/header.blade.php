@@ -1,3 +1,4 @@
+@props(['message_count' => []])
 <header class="sticky top-0 bg-white dark:bg-[#182235] border-b border-slate-200 dark:border-slate-700 z-30">
     <div class="px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16 -mb-px">
@@ -29,7 +30,7 @@
                 <x-cruip.modal-search />
 
                 <!-- Notifications button -->
-                <x-cruip.dropdown-notifications align="right" />
+                <x-cruip.dropdown-notifications :message_count="$message_count" align="right" />
 
                 <!-- Info button -->
                 <x-cruip.dropdown-help align="right" />

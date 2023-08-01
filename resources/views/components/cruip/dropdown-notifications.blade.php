@@ -1,5 +1,6 @@
 @props([
-    'align' => 'right'
+    'align' => 'right',
+    'message_count' => []
 ])
 
 <div class="relative inline-flex" x-data="{ open: false }">
@@ -32,24 +33,15 @@
     >
         <div class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase pt-1.5 pb-2 px-4">Notifications</div>
         <ul>
+            @if(isset($message_count) && $message_count >= 1)
             <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
-                    <span class="block text-sm mb-2">📣 <span class="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                    <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 12, 2021</span>
+                <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="{{ route('messages') }} " @click="open = false" @focus="open = true" @focusout="open = false">
+                    <span class="block text-sm mb-2"><x-fas class="fas fa-envelope"></x-fas> <span class="font-medium text-slate-800 dark:text-slate-100"> You have {{ $message_count }} unread messages.</span></span>
+                    <!-- <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 12, 2021</span> -->
                 </a>
             </li>
-            <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
-                    <span class="block text-sm mb-2">📣 <span class="font-medium text-slate-800 dark:text-slate-100">Edit your information in a swipe</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                    <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Feb 9, 2021</span>
-                </a>
-            </li>
-            <li class="border-b border-slate-200 dark:border-slate-700 last:border-0">
-                <a class="block py-2 px-4 hover:bg-slate-50 dark:hover:bg-slate-700/20" href="#0" @click="open = false" @focus="open = true" @focusout="open = false">
-                    <span class="block text-sm mb-2">🚀<span class="font-medium text-slate-800 dark:text-slate-100">Say goodbye to paper receipts!</span> Sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim.</span>
-                    <span class="block text-xs font-medium text-slate-400 dark:text-slate-500">Jan 24, 2020</span>
-                </a>
-            </li>
+            @endif
+            
         </ul>                
     </div>
 </div>
