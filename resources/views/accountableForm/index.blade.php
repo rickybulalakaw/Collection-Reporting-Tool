@@ -8,7 +8,7 @@
   Home
  </h1>
  <p class="mx-auto w-10/12 justify-start mb-3">Hi, {{ auth()->user()->name }}.</p>
- <p class="mx-auto w-10/12 justify-start mb-3">This application is developed by the Information and Communications Technology Office to hasten reporting of collections.</p>
+ <p class="mx-auto w-10/12 justify-start mb-3">This application is developed by the Information and Communications Technology Office to speed up reporting of collections.</p>
  
 
 </div>
