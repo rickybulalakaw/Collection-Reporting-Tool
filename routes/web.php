@@ -12,6 +12,7 @@ use App\Http\Controllers\AccountableFormController;
 use App\Http\Controllers\CollectionReportController;
 use App\Http\Controllers\AccountableFormItemController;
 use App\Http\Controllers\AccountableFormTypeController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\RevenueTypeController;
 
 /*
@@ -24,8 +25,14 @@ update - save new data of edited
 destroy - delete one 
 */
 
+Route::controller(MessageController::class)->group(function () {
+    Route::post('/save-message', 'store')->name('save-message');
+    Route::get('/messages', 'index')->name('messages');
+}); 
+
 Route::controller(CollectionReportController::class)->group(function () {
     Route::get('/draft-collection-report', 'draft')->name('draft-individual-report');
+    Route::get('view-individual-report/{user}/{date}', 'viewIndividual')->name('view-individual-report');
     
 });
 
@@ -93,6 +100,12 @@ Route::controller(AccountableFormTypeController::class)->group(function () {
     Route::put('edit/{accountableFormType}', 'update');
     Route::delete('/accountableFormType/{accountableFormType}', 'destroy')->name('delete-accountable-form-type');
 });
+
+// Route::get('/test', function () {
+//     // return a 404 message
+//     abort(404);
+
+// });
 
 Route::middleware([
     'auth:sanctum',

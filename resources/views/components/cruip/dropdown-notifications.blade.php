@@ -1,6 +1,6 @@
 @props([
     'align' => 'right',
-    'message_count' => []
+    'message_count' => ''
 ])
 
 <div class="relative inline-flex" x-data="{ open: false }">

@@ -27,11 +27,19 @@ class RealPropertyController extends Controller
         ->where('accountable_forms.use_status', AccountableForm::IS_ASSIGNED)
         ->get();
 
-        $collectors = User::get();
+
+
+        $message_count = DB::table('messages')
+        ->select('sender.first_name as first_name', 'sender.last_name as last_name', 'messages.subject as subject', 'messages.created_at as created_at')
+        ->join('users as recipient', 'messages.recipient_user_id', '=', 'recipient.id')
+        ->join('users as sender', 'messages.user_id', '=', 'sender.id')
+        ->where('messages.recipient_user_id', auth()->user()->id)
+        ->where('messages.status', Message::STATUS_UNREAD)
+        ->count();
 
         $context = [
             'accountableFormTypesOfUser' => $accountable_form_types_of_user,
-            'collectors' => $collectors
+            'message_count' => $message_count,
         ];
         return $context;
     }
