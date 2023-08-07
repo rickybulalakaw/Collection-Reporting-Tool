@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -16,5 +17,21 @@ class AdminController extends Controller
 
     }
 
+    public function assignRole(User $user)
+    {
+
+    }
+
+    public function assignRoleSave(User $user, Request $request)
+    {
+
+    }
+
+    public function removeRole(User $user)
+    {
+
+    }
+
+    
     
 }
