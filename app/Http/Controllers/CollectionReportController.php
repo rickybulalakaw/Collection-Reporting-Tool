@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\AccountableForm;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\Gate;
 
 class CollectionReportController extends Controller
 {
@@ -30,7 +31,6 @@ class CollectionReportController extends Controller
 
         // $collectors = User::where('status', User::STATUS_ACTIVE)->get();
 
-        $collectors = User::where('function', '=', User::IS_COLLECTOR)->get();
 
         $message_count = DB::table('messages')
             ->select('sender.first_name as first_name', 'sender.last_name as last_name', 'messages.subject as subject', 'messages.created_at as created_at')
@@ -43,7 +43,6 @@ class CollectionReportController extends Controller
 
         $context = [
             'accountable_form_types_of_user' => $accountable_form_types_of_user,
-            'collectors' => $collectors,
             'message_count' => $message_count,
         ];
         
@@ -120,6 +119,17 @@ class CollectionReportController extends Controller
         // $user is the person who submitted the individual report 
 
 
+    }
+
+    public function collectors()
+    {
+        // this method shows list of staff under the user 
+        // the user must be a supervisor
+
+        
+        if (! Gate::allows('is-admin', auth()->user()->id)) {
+            abort(403);
+        }
     }
 
     
